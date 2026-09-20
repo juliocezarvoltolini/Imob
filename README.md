@@ -63,7 +63,7 @@ Convenção de identificadores usada em todo o material:
 | # | Módulo | Para quê serve |
 |---|--------|----------------|
 | 1 | **Empreendimentos** | Cadastro do loteamento: dados jurídicos, ambientais, perímetro, fases de obra e infraestrutura. |
-| 2 | **Lotes e Georreferenciamento** | Cadastro dos lotes com vértices, dimensões planas, área/perímetro calculados e importação de arquivos geográficos (KML/KMZ, GeoJSON, Shapefile, DXF/DWG). |
+| 2 | **Lotes e Georreferenciamento** | Cadastro dos lotes com vértices, dimensões planas e área/perímetro calculados, com importação simples (KML/KMZ, GeoJSON, planilha) e entrada manual. Sem ferramentas de topografia/CAD. |
 | 3 | **Mapa Interativo / Espelho de Vendas** | Visualização dos lotes sobre imagem de satélite/planta, coloridos por status, com filtros e ações (reservar/vender). |
 | 4 | **CRM / Leads e Clientes** | Captação e qualificação de leads, funil de vendas, distribuição para corretores, agenda de visitas e cadastro completo do cliente. |
 | 5 | **Reservas** | Reserva temporária de lote com expiração, aprovação e fila de espera. |
@@ -79,20 +79,31 @@ Convenção de identificadores usada em todo o material:
 | 15 | **Portal do Corretor** | Estoque, reservas, propostas, comissões e materiais de venda. |
 | 16 | **Integrações** | Bancos, assinatura eletrônica, mapas, Receita/CEP, mensageria e contabilidade. |
 
-## 5. Premissas e questões em aberto
+## 5. Definições do cliente e questões em aberto
 
-Este material é um **primeiro rascunho** construído a partir da descrição
-resumida do projeto. Ele assume algumas premissas que precisam ser validadas —
-elas estão consolidadas no fim de [`docs/01-requisitos.md`](docs/01-requisitos.md#9-premissas-e-questões-em-aberto).
-Os principais pontos a confirmar são:
+As decisões abaixo foram **confirmadas com o cliente** e orientam todo o
+material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.md#9-premissas-e-decisões)):
 
-- Modelo de venda predominante: **financiamento próprio** (carteira) e/ou
-  financiamento bancário e à vista.
-- Modelagem jurídica dos empreendimentos: **loteamento/desmembramento** com
-  matrícula individual por lote, **condomínio** por fração ideal, ou ambos.
-- Necessidade de **app mobile** para corretores em campo (com uso offline).
-- Volume esperado (nº de empreendimentos, lotes por empreendimento, contratos
-  ativos) para dimensionar requisitos não-funcionais.
+- **Formas de pagamento**: o sistema suporta **financiamento próprio (carteira)**,
+  **à vista** e **financiamento bancário** — os três são escopo do MVP.
+- **Financiamento direto (prática atual)**: **juros ao mês** + **correção pelo
+  IGP-M a partir do 13º mês** (sem correção no primeiro ano de contrato). Os
+  métodos de amortização e índices são **configuráveis** (todos implementados).
+- **Modelagem jurídica**: o sistema suporta **os dois modelos** —
+  loteamento/desmembramento com **matrícula individual por lote** e **condomínio
+  por fração ideal**.
+- **Comissão**: suporta **os dois formatos** de pagamento — **à vista** e
+  **conforme o recebimento** das parcelas.
+- **Acesso**: inicialmente **somente via navegador (web)**; **sem app mobile**
+  nesta etapa.
+- **Georreferenciamento**: escopo **simplificado** — armazenar e exibir
+  coordenadas e **dimensões planas** dos lotes. **Não** haverá interface de
+  topógrafo nem tratamento de **complexidade topográfica** (relevo, curvas de
+  nível, edição CAD).
+
+Ainda a dimensionar: **volume** (nº de empreendimentos, lotes por empreendimento
+e contratos ativos) e a definição dos **provedores de integração** (banco,
+assinatura eletrônica, mapas).
 
 > ⚠️ **Aviso**: os itens de conformidade legal/regulatória (INCRA, CAR, ITR,
 > registro em cartório, parcelamento do solo, LGPD) estão listados como

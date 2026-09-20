@@ -16,7 +16,7 @@ Formato: **Como** \<ator\>, **quero** \<ação\>, **para** \<valor\>.
 
 ### Épico A — Cadastro e Estoque Georreferenciado
 - Como **backoffice**, quero cadastrar um empreendimento e importar seus lotes a
-  partir de um arquivo do topógrafo (KML/DWG/Shapefile), **para** montar o
+  partir de um arquivo geográfico simples (KML/GeoJSON) ou planilha, **para** montar o
   estoque sem digitação manual. *(RF-EMP-001, RF-LOT-010)*
 - Como **backoffice**, quero que a **área e o perímetro** de cada lote sejam
   calculados automaticamente a partir dos vértices, **para** conferir com o
@@ -73,17 +73,22 @@ Formato: **Como** \<ator\>, **quero** \<ação\>, **para** \<valor\>.
 ## 2. Priorização MoSCoW
 
 ### Must (MVP)
-Cadastro de empreendimentos e lotes com georreferenciamento e cálculo de
-área/perímetro; importação geográfica; mapa/espelho de vendas por status; CRM
-básico e reservas; propostas com simulação e alçadas; efetivação de venda;
-geração de contrato por template; **plano de pagamento, correção, boletos e
-baixa (manual + CNAB)**; inadimplência básica; distrato; comissão com split;
-usuários/RBAC e auditoria; dashboard comercial e espelho exportável.
+Cadastro de empreendimentos (com **os dois modelos jurídicos**: matrícula
+individual e fração ideal) e lotes com **georreferenciamento simplificado**
+(coordenadas + dimensões planas) e cálculo de área/perímetro; importação
+geográfica (KML/GeoJSON/planilha); mapa/espelho de vendas por status; CRM básico
+e reservas; propostas com simulação e alçadas nas **três formas de pagamento**
+(à vista, bancário, próprio); efetivação de venda; geração de contrato por
+template; **plano de pagamento do financiamento próprio com juros mensais e
+correção IGP-M a partir do 13º mês, boletos e baixa (manual + CNAB)**;
+inadimplência básica; distrato; comissão com split (à vista e conforme
+recebimento); usuários/RBAC e auditoria; dashboard comercial e espelho
+exportável.
 
-*(RF-EMP-001/002/005/006/008/009/010, RF-LOT-001..004/006/008/009/010/012,
+*(RF-EMP-001/002/005/006/008/009/010/011, RF-LOT-001..004/006/008/009/010/012,
 RF-MAP-001..006, RF-CRM-001/003/005/007/010, RF-RES-001..003/007,
-RF-VEN-001..003/006..008, RF-CTR-001/002/005/007, RF-FIN-001..005/007/010/012,
-RF-COM-001..003, RF-GED-001, RF-REL-001..003, RF-ADM-001/002/004/005,
+RF-VEN-001..003/005..008, RF-CTR-001/002/005/007, RF-FIN-001..005/007/010/012,
+RF-COM-001..004, RF-GED-001, RF-REL-001..003, RF-ADM-001/002/004/005,
 RNF-001..004/007..009/011/012)*
 
 ### Should
@@ -95,15 +100,18 @@ exportação contábil; checklist documental; portal do cliente e do corretor
 Receita/CEP.
 
 ### Could
-Camadas avançadas do mapa (APP/curvas de nível), medição e modo apresentação;
+Camadas informativas do mapa (APP/Reserva Legal), medição e modo apresentação;
 fila de espera em reservas; remembramento/desmembramento; detecção de
-sobreposição geométrica; app mobile offline; metas/performance; conciliação
-bancária; relatórios customizáveis; controle de validade documental; BI externo;
-acompanhamento de registro em cartório.
+sobreposição geométrica; metas/performance; conciliação bancária; relatórios
+customizáveis; controle de validade documental; BI externo; acompanhamento de
+registro em cartório.
 
 ### Won't (por ora)
-Execução detalhada de obra/engenharia; contabilidade fiscal completa; cartório
-eletrônico; portal público de anúncios próprio. *(ver "Fora do escopo" em
+**App mobile** (nesta etapa o acesso é somente via navegador); **interface de
+topógrafo** e tratamento de **complexidade topográfica** (relevo, curvas de
+nível, edição CAD/DWG); execução detalhada de obra/engenharia; contabilidade
+fiscal completa; cartório eletrônico; portal público de anúncios próprio.
+*(ver "Fora do escopo" em
 [`01-requisitos.md`](01-requisitos.md#12-fora-do-escopo-nesta-versão))*
 
 ## 3. Roadmap sugerido em fases
@@ -115,8 +123,8 @@ eletrônico; portal público de anúncios próprio. *(ver "Fora do escopo" em
 |------|------|---------------------|
 | **Fase 0 — Fundação** | Base técnica | Autenticação, RBAC, multiempresa, parametrização, auditoria, GED básico. |
 | **Fase 1 — Estoque e Mapa** | "Ver e cadastrar" | Empreendimentos, lotes, importação geográfica, cálculo de área/perímetro, mapa/espelho de vendas por status. |
-| **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas, efetivação da venda, contrato por template. |
-| **Fase 3 — Financeiro** | "Receber" | Plano de pagamento, correção/juros, boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato. |
+| **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas nas **três formas de pagamento**, efetivação da venda, contrato por template (para os **dois modelos jurídicos**). |
+| **Fase 3 — Financeiro** | "Receber" | Plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato. |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência e Mobilidade** | "Otimizar" | Dashboards avançados/BI, portal e app do corretor (offline), camadas avançadas do mapa, conciliação. |

@@ -19,18 +19,28 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 ### 1.1 Dentro do escopo
 
 - Gestão de **empreendimentos rurais** (loteamentos, condomínios de chácaras,
-  áreas de recreio) e seus **lotes** georreferenciados.
-- **Estoque e disponibilidade** de lotes com mapa/espelho de vendas.
+  áreas de recreio) e seus **lotes** georreferenciados, suportando **os dois
+  modelos jurídicos**: loteamento/desmembramento com **matrícula individual por
+  lote** e **condomínio por fração ideal**.
+- **Estoque e disponibilidade** de lotes com mapa/espelho de vendas
+  (coordenadas e **dimensões planas**, sem complexidade topográfica).
 - **CRM comercial**: leads, funil, reservas, propostas.
 - **Contratos** e documentação da venda.
-- **Financeiro de recebíveis** com financiamento próprio (carteira): carnês,
-  correção, cobrança, inadimplência, distrato, repasses.
-- **Comissionamento** de corretores e parceiros.
-- **Portais** de autoatendimento (cliente e corretor).
+- **Vendas nas três formas de pagamento**: **à vista**, **financiamento
+  bancário** e **financiamento próprio (carteira)**.
+- **Financeiro de recebíveis** do financiamento próprio: carnês, **juros
+  mensais**, **correção pelo IGP-M a partir do 13º mês**, cobrança,
+  inadimplência, distrato e repasses. Métodos e índices **configuráveis**.
+- **Comissionamento** de corretores e parceiros (à vista e conforme recebimento).
+- **Portais web** de autoatendimento (cliente e corretor).
 - **Relatórios e indicadores** gerenciais.
 
 ### 1.2 Fora do escopo (nesta versão)
 
+- **Interface/ferramentas de topografia** e tratamento de **complexidade
+  topográfica** (relevo, curvas de nível, modelagem 3D, edição CAD). O sistema
+  apenas **armazena e exibe** coordenadas e dimensões planas já definidas.
+- **Aplicativo mobile** — o acesso nesta etapa é **somente via navegador (web)**.
 - Sistema de **execução de obras/engenharia** do loteamento (cronograma físico
   detalhado, diário de obra) — apenas o acompanhamento macro de fases é previsto.
 - **Contabilidade fiscal completa** (SPED, apuração de tributos) — prevê-se
@@ -111,7 +121,8 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-EMP-007 | Acompanhar **fases de infraestrutura/obra** em nível macro (terraplenagem, vias, energia, água, portaria, paisagismo) com percentual de conclusão. | S |
 | RF-EMP-008 | Anexar documentos do empreendimento (planta aprovada, memorial descritivo, licenças, ART/RRT, contrato com o loteador). | M |
 | RF-EMP-009 | Definir a **tabela de preços** vigente do empreendimento e seu histórico de reajustes. | M |
-| RF-EMP-010 | Configurar **condições comerciais padrão** por empreendimento (entrada mínima, prazos, índice de correção, juros, alçadas de desconto). | M |
+| RF-EMP-010 | Configurar **condições comerciais padrão** por empreendimento (entrada mínima, prazos, índice de correção, juros, carência de correção, alçadas de desconto). | M |
+| RF-EMP-011 | Definir o **modelo jurídico** do empreendimento — **loteamento/desmembramento** (matrícula individual por lote) ou **condomínio** (fração ideal) — refletindo-o na titularidade do lote, no contrato e no fluxo de registro. | M |
 
 ### 4.2 Módulo Lotes e Georreferenciamento (`LOT`)
 
@@ -123,10 +134,10 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-LOT-004 | **Calcular automaticamente** área e perímetro planos a partir do polígono de vértices, permitindo comparar com os valores do memorial descritivo. | M |
 | RF-LOT-005 | Registrar **confrontações/limites** (confrontantes em cada face) e a matrícula individual do lote (quando houver desmembramento). | S |
 | RF-LOT-006 | Classificar o lote por **tipo/uso** (residencial, comercial, misto, área institucional, área verde, sistema viário, área não comercializável). | M |
-| RF-LOT-007 | Registrar **características físicas** (topografia: plano/aclive/declive; esquina; frente para lago/rua/área verde) usadas como **fatores de valorização**. | S |
+| RF-LOT-007 | Registrar **características físicas** como rótulos simples (ex.: plano/aclive/declive; esquina; frente para lago/rua/área verde) usadas como **fatores de valorização** — sem modelagem de relevo/topografia. | S |
 | RF-LOT-008 | Definir **preço do lote**: valor base, valor por m², e aplicação de fatores de valorização/deságio. | M |
 | RF-LOT-009 | Controlar o **status do lote**: disponível, reservado, em proposta, vendido, quitado, bloqueado, permutado, caução/garantia, indisponível. | M |
-| RF-LOT-010 | **Importar lotes em massa** a partir de planilha (CSV/XLSX) e de arquivos geográficos (**KML/KMZ, GeoJSON, Shapefile, DXF/DWG**), com pré-visualização e validação. | M |
+| RF-LOT-010 | **Importar lotes em massa** a partir de planilha (CSV/XLSX) e de arquivos geográficos simples (**KML/KMZ, GeoJSON**), com pré-visualização e validação. Shapefile é opcional/futuro; **formatos CAD (DXF/DWG) estão fora do escopo**. | M |
 | RF-LOT-011 | **Exportar** os lotes e o perímetro em formatos geográficos (KML, GeoJSON) e planilha. | S |
 | RF-LOT-012 | Manter **histórico** de cada lote (mudanças de preço, status, reservas, vendas, distratos). | M |
 | RF-LOT-013 | Detectar **inconsistências geométricas** (sobreposição entre lotes, vértices duplicados, polígono não fechado) na importação/edição. | C |
@@ -142,7 +153,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-MAP-004 | Executar ações a partir do mapa conforme permissão: **reservar**, **iniciar proposta**, **bloquear**. | M |
 | RF-MAP-005 | **Filtrar** o mapa por status, faixa de preço, faixa de área, quadra/fase e características. | M |
 | RF-MAP-006 | Oferecer **espelho de vendas** em formato de grade/lista (visão tabular do estoque) sincronizado com o mapa. | M |
-| RF-MAP-007 | Alternar/sobrepor **camadas** (APP, Reserva Legal, infraestrutura, curvas de nível, áreas comuns). | C |
+| RF-MAP-007 | Alternar/sobrepor **camadas** informativas (APP, Reserva Legal, infraestrutura, áreas comuns). | C |
 | RF-MAP-008 | Ferramentas de **medição** de distância e área diretamente no mapa. | C |
 | RF-MAP-009 | Exibir mapa em **modo público/apresentação** (sem preços sensíveis) para uso comercial com o cliente. | S |
 
@@ -181,11 +192,12 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-VEN-002 | **Simular condições de pagamento**: valor à vista, entrada/sinal, nº e valor de parcelas, parcelas intermediárias (balões), parcela final, índice de correção e juros. | M |
 | RF-VEN-003 | Aplicar **descontos** respeitando alçadas por perfil; acima do limite, exigir **aprovação** do gestor. | M |
 | RF-VEN-004 | Registrar **contraproposta/negociação** com histórico de versões da proposta. | S |
-| RF-VEN-005 | Suportar formas de pagamento além do parcelamento: **à vista**, **financiamento bancário**, **permuta** e **dação em pagamento**. | S |
+| RF-VEN-005 | Suportar as **três formas de pagamento**: **à vista**, **financiamento bancário** e **financiamento próprio (carteira)**, cada uma com seu fluxo, documentação e reflexo no plano financeiro. | M |
 | RF-VEN-006 | **Efetivar a venda** (proposta aprovada → venda), atualizando o status do lote para "vendido" e disparando a geração de contrato e do plano financeiro. | M |
 | RF-VEN-007 | Gerar **número/identificador único** da venda e do contrato. | M |
 | RF-VEN-008 | Suportar **cancelamento/distrato** da venda com as regras financeiras associadas (ver módulo Financeiro). | M |
 | RF-VEN-009 | Registrar **checklist de documentos** exigidos para a venda e controlar pendências (ver GED). | S |
+| RF-VEN-010 | Suportar **permuta** e **dação em pagamento** como composição do negócio (entrada/parte do pagamento). | S |
 
 ### 4.7 Módulo Contratos (`CTR`)
 
@@ -204,7 +216,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | ID | Requisito | Prior. |
 |----|-----------|:------:|
 | RF-FIN-001 | Gerar o **plano de pagamento** (cronograma de parcelas) da venda: entrada, parcelas mensais, intermediárias (balões) e parcela final. | M |
-| RF-FIN-002 | Aplicar **correção monetária** por índice contratado (INCC, IGP-M, IPCA, etc.) e **juros** (tabela Price/SAC ou juros simples), conforme a regra do contrato. | M |
+| RF-FIN-002 | Aplicar **juros** (métodos configuráveis: Price, SAC, juros simples) e **correção monetária** por índice contratado (IGP-M, INCC, IPCA, etc.), com **carência de correção configurável**. Regra atual do cliente: **juros ao mês** + **correção pelo IGP-M somente a partir do 13º mês** de contrato. | M |
 | RF-FIN-003 | **Emitir boletos/carnê** (integração bancária) e disponibilizar a **2ª via**; suportar **PIX** (QR/copia-e-cola). | M |
 | RF-FIN-004 | Registrar **recebimentos**: baixa manual, baixa automática por **retorno bancário (CNAB 240/400)** e conciliação por PIX. | M |
 | RF-FIN-005 | Calcular **juros, multa e correção por atraso** na quitação de parcelas vencidas. | M |
@@ -291,7 +303,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-PCO-002 | **Reservar** lotes e registrar **propostas** pelo portal. | S |
 | RF-PCO-003 | Acompanhar **comissões** e extratos. | S |
 | RF-PCO-004 | Acessar **materiais de venda** (plantas, tabela, apresentações). | C |
-| RF-PCO-005 | **App mobile** com uso em campo, incluindo modo **offline** para o mapa/estoque. | C |
+| RF-PCO-005 | **App mobile** com uso em campo (modo offline) — **fora do escopo inicial**; nesta etapa o acesso é somente via navegador (web responsivo). | W |
 
 ## 5. Requisitos não-funcionais
 
@@ -336,7 +348,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 |----|-----------|-----|
 | RF-INT-001 | **Banco / meios de pagamento** | Emissão e registro de boletos, retorno CNAB 240/400 para baixa automática, PIX (cobrança e conciliação). |
 | RF-INT-002 | **Assinatura eletrônica** | Envio e acompanhamento de contratos/aditivos/distratos (ex.: provedores de e-signature). |
-| RF-INT-003 | **Mapas e cartografia** | Base de mapas/satélite e renderização de camadas (ex.: provedores de tiles/mapas); suporte a formatos KML/KMZ, GeoJSON, Shapefile, DXF/DWG. |
+| RF-INT-003 | **Mapas e cartografia** | Base de mapas/satélite e renderização de camadas (ex.: provedores de tiles/mapas); leitura de formatos geográficos simples (KML/KMZ, GeoJSON) e planilha. Sem suporte a formatos CAD (DXF/DWG). |
 | RF-INT-004 | **Receita Federal / cadastros** | Validação de CPF/CNPJ e situação cadastral. |
 | RF-INT-005 | **CEP / endereço** | Autopreenchimento de endereço por CEP. |
 | RF-INT-006 | **Mensageria** | Envio de e-mail, SMS e **WhatsApp** para cobrança, avisos e marketing. |
@@ -355,39 +367,59 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 - **Motor de cálculo financeiro**: decidir entre construir internamente ou
   integrar a um sistema de gestão de recebíveis existente.
 
-## 9. Premissas e questões em aberto
+## 9. Premissas e decisões
 
-### 9.1 Premissas adotadas neste rascunho
+### 9.1 Decisões confirmadas com o cliente
 
-1. A venda predominante é por **financiamento próprio (carteira)** com
-   parcelamento de longo prazo — por isso o módulo financeiro é tratado como
-   **essencial (Must)**.
-2. Cada empreendimento é subdividido em **lotes**, opcionalmente agrupados em
+1. **Formas de pagamento**: o sistema suporta **as três** — **à vista**,
+   **financiamento bancário** e **financiamento próprio (carteira)**. Todas no
+   escopo do MVP. *(RF-VEN-005)*
+2. **Financiamento direto (prática atual)**: **juros ao mês** + **correção pelo
+   IGP-M somente a partir do 13º mês** de contrato (carência de 12 meses sem
+   correção). Os **métodos de amortização e índices são configuráveis** e todos
+   devem ser implementados. *(RF-FIN-002, RN-031, RN-031a)*
+3. **Modelagem jurídica**: suportar **os dois modelos** — loteamento/
+   desmembramento com **matrícula individual por lote** e **condomínio por
+   fração ideal**. *(RF-EMP-011)*
+4. **Comissão**: suportar **os dois formatos** de pagamento — **à vista** e
+   **conforme o recebimento** das parcelas. *(RF-COM-004, RN-052)*
+5. **Acesso**: nesta etapa, **somente via navegador (web responsivo)**; **sem
+   app mobile**. *(RF-PCO-005 → fora do escopo inicial)*
+6. **Georreferenciamento simplificado**: o sistema **armazena e exibe**
+   coordenadas (vértices) e **dimensões planas** dos lotes, **sem** interface de
+   topógrafo e **sem** tratamento de complexidade topográfica (relevo, curvas de
+   nível, edição CAD/DWG). *(seção 1.2; RF-LOT-007/010)*
+
+### 9.2 Premissas adotadas
+
+1. Cada empreendimento é subdividido em **lotes**, opcionalmente agrupados em
    **quadras/setores** e **fases**.
-3. Cada lote tem **polígono de vértices** e **dimensões planas** (a menção a
-   "dimensões planas" foi interpretada como **área/medidas projetadas no plano**,
-   independentes do relevo).
-4. A imobiliária pode administrar **vários empreendimentos** de **um ou mais
+2. "Dimensões planas" = **área/medidas projetadas no plano horizontal**,
+   independentes do relevo.
+3. A imobiliária pode administrar **vários empreendimentos** de **um ou mais
    loteadores/proprietários**, exigindo controle de **repasses**.
-5. Corretores próprios e **imobiliárias parceiras** vendem os lotes, exigindo
+4. Corretores próprios e **imobiliárias parceiras** vendem os lotes, exigindo
    **comissionamento com split**.
+5. Na venda por **financiamento bancário**, o repasse do agente financeiro
+   quita (à vista, para a loteadora) o valor financiado; o sistema controla o
+   processo, não a operação de crédito do banco.
 
-### 9.2 Questões a validar com o cliente
+### 9.3 Questões ainda em aberto
 
-1. **Modelo de venda**: além do financiamento próprio, haverá à vista e/ou
-   financiamento bancário? Há consórcio?
-2. **Modelagem jurídica**: loteamento/desmembramento com **matrícula individual
-   por lote**, **condomínio por fração ideal**, ou ambos coexistem?
-3. **Correção e juros**: quais índices e método (Price/SAC/juros simples) são
-   praticados? Há reajuste anual e "pé" (parcela intermediária) definidos?
-4. **Distrato**: qual a política de retenção e devolução?
-5. **Comissão**: paga à vista ou conforme recebimento? Como é o split
-   (captador/corretor/gerente/imobiliária)?
-6. **Volume**: quantos empreendimentos, lotes por empreendimento e contratos
+1. **Correção do financiamento direto**: a taxa de **juros ao mês** é única ou
+   varia por empreendimento/campanha? Após o 13º mês, a correção pelo IGP-M é
+   **mensal** ou **anual** (no aniversário)? Há reajuste da parcela ou apenas do
+   saldo devedor?
+2. **Parcelas intermediárias (balões)**: são praticadas? Em qual periodicidade?
+3. **Distrato**: qual a **política de retenção** e o modelo de devolução
+   (percentuais, cláusula penal, parcelamento da devolução)?
+4. **Split de comissão**: como é a divisão entre captador, corretor, gerente e
+   imobiliária?
+5. **Volume**: quantos empreendimentos, lotes por empreendimento e contratos
    ativos (para dimensionar RNF de desempenho/escala)?
-7. **Mobile/offline**: os corretores precisam operar em campo sem internet?
-8. **Portal do cliente**: entra no MVP ou em fase posterior?
-9. **Integrações prioritárias**: qual banco, qual provedor de assinatura e qual
-   ERP/contábil?
-10. **Origem dos dados geográficos**: os lotes virão de topógrafo em qual
-    formato (KML, DWG, Shapefile) e em qual sistema de coordenadas/datum?
+6. **Portal do cliente**: entra no MVP ou em fase posterior?
+7. **Integrações prioritárias**: qual banco (boleto/CNAB/PIX), qual provedor de
+   assinatura eletrônica e qual ERP/contábil?
+8. **Origem dos dados geográficos**: em qual formato os lotes chegarão
+   (KML/KMZ, GeoJSON, planilha) e em qual sistema de coordenadas/datum
+   (ex.: SIRGAS 2000, UTM)?

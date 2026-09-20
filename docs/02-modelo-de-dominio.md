@@ -64,7 +64,7 @@ erDiagram
 | Entidade | Descrição | Atributos-chave |
 |----------|-----------|-----------------|
 | **Loteador / Proprietário** | Dono da gleba que origina o empreendimento; recebe repasses. | nome/razão social, documento, dados bancários, % ou regra de repasse |
-| **Empreendimento** | Loteamento/condomínio rural gerido pela imobiliária. | nome, tipo, município/UF, área total, matrícula-mãe, cartório, CCIR, CAR, situação, perímetro (polígono), datum |
+| **Empreendimento** | Loteamento/condomínio rural gerido pela imobiliária. | nome, tipo, **modelo jurídico** (loteamento c/ matrícula individual x condomínio por fração ideal), município/UF, área total, matrícula-mãe, cartório, CCIR, CAR, situação, perímetro (polígono), datum |
 | **Fase / Etapa** | Recorte de lançamento do empreendimento. | nome, ordem, situação, % infraestrutura |
 | **Quadra / Setor** | Agrupamento de lotes. | identificação, empreendimento |
 | **Lote** | Unidade comercializável. | nº, quadra/fase, tipo/uso, **área**, **perímetro**, **dimensões** (frente/fundos/laterais), características (topografia, esquina), matrícula individual, **status**, preço base, valor/m² |
@@ -87,7 +87,7 @@ erDiagram
 | **Lead** | Interessado no funil de vendas. | origem, etapa do funil, corretor, interações |
 | **Reserva** | Bloqueio temporário de um lote. | lote, cliente/lead, corretor, data, expiração, status |
 | **Proposta** | Oferta comercial com condições. | lote, cliente, corretor, condições (entrada, parcelas, índice, desconto), status/aprovação, versões |
-| **Venda** | Negócio efetivado. | nº, lote, compradores, corretor, valor, condições, data, status |
+| **Venda** | Negócio efetivado. | nº, lote, compradores, corretor, valor, **forma de pagamento** (à vista/bancário/próprio), condições, data, status |
 | **Contrato** | Instrumento jurídico da venda. | modelo, conteúdo, status de assinatura, anexos |
 | **Aditivo** | Alteração contratual. | tipo, conteúdo, data |
 | **Distrato** | Rescisão da venda. | motivo, cálculo de devolução, cronograma, data |
@@ -96,7 +96,7 @@ erDiagram
 
 | Entidade | Descrição | Atributos-chave |
 |----------|-----------|-----------------|
-| **Plano de Pagamento** | Cronograma financeiro da venda. | entrada, nº parcelas, índice, juros, método (Price/SAC) |
+| **Plano de Pagamento** | Cronograma financeiro da venda. | entrada, nº parcelas, índice de correção, **carência de correção** (ex.: 12 meses), taxa de juros ao mês, método (Price/SAC/simples) |
 | **Parcela** | Item do plano de pagamento. | número, tipo (entrada/mensal/balão/final), vencimento, valor, saldo, status |
 | **Boleto / Cobrança** | Documento de cobrança da parcela. | nosso número, linha digitável/PIX, vencimento, valor, status |
 | **Recebimento** | Baixa de pagamento. | parcela, valor, data, forma, origem (manual/CNAB/PIX) |
@@ -164,6 +164,8 @@ Termos do setor imobiliário rural e do domínio do sistema.
 | **Proposta** | Oferta formal de compra com condições comerciais. |
 | **Distrato** | Rescisão do contrato de compra e venda. |
 | **Financiamento próprio / Carteira** | Parcelamento concedido diretamente pela loteadora/imobiliária. |
+| **Financiamento bancário** | Crédito concedido por um agente financeiro; o banco quita o valor à loteadora e o comprador paga ao banco. |
+| **Carência de correção** | Período inicial do contrato sem correção monetária (na prática atual, 12 meses; a correção IGP-M passa a incidir a partir do 13º mês). |
 | **Balão / Intermediária** | Parcela de maior valor em intervalos (anual/semestral). |
 | **Correção monetária** | Atualização do saldo devedor por um índice (INCC, IGP-M, IPCA). |
 | **Price / SAC** | Sistemas de amortização de financiamento (parcelas fixas / amortização constante). |

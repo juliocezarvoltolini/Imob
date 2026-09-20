@@ -53,13 +53,16 @@ configuráveis e os valores abaixo são exemplos.
 | RN-026 | A **entrada/sinal mínima** e o **prazo máximo** de parcelamento são definidos por empreendimento; propostas fora do padrão exigem aprovação. |
 | RN-027 | A **efetivação da venda** dispara: atualização do lote para **Vendido**, geração do **contrato** e do **plano de pagamento**, e apuração das **comissões**. |
 | RN-028 | Uma venda pode ter **múltiplos compradores** (coproprietários), com responsabilidade solidária pelas parcelas. |
+| RN-029 | A venda adota **uma das três formas de pagamento**: **à vista** (quitação integral), **financiamento bancário** (dependente de aprovação de crédito do agente financeiro, que repassa o valor à loteadora) ou **financiamento próprio** (parcelamento em carteira). A forma escolhida define o **plano de pagamento** e a documentação exigida. |
+| RN-029a | O **modelo jurídico** do empreendimento determina a titularidade e o instrumento contratual: **loteamento/desmembramento** transfere a **matrícula individual** do lote; **condomínio** transfere **fração ideal**. O fluxo de registro segue o modelo aplicável. |
 
 ## Financeiro e recebíveis
 
 | ID | Regra |
 |----|-------|
-| RN-030 | O **plano de pagamento** é composto por entrada + parcelas mensais + intermediárias (balões) + parcela final, conforme a proposta aprovada. |
-| RN-031 | O **saldo devedor** é corrigido pelo **índice contratado** (ex.: INCC, IGP-M, IPCA) na periodicidade pactuada; o índice e a data-base ficam registrados no contrato. |
+| RN-030 | O **plano de pagamento** é composto por entrada + parcelas mensais + intermediárias (balões) + parcela final, conforme a proposta aprovada e a **forma de pagamento** (à vista, financiamento bancário ou financiamento próprio). |
+| RN-031 | No **financiamento próprio**, incidem **juros ao mês** e **correção monetária** pelo **índice contratado** (IGP-M, INCC, IPCA...). O método de amortização (Price/SAC/juros simples), o índice, a data-base e a **carência de correção** são **configuráveis** e ficam registrados no contrato. |
+| RN-031a | **Prática atual do cliente**: correção pelo **IGP-M somente a partir do 13º mês** de contrato (carência de 12 meses sem correção); os **juros mensais** incidem desde o início. A carência é um parâmetro (default = 12 meses) para permitir outras políticas. |
 | RN-032 | Parcela paga **após o vencimento** sofre **multa + juros de mora + correção**, conforme parâmetros do contrato. |
 | RN-033 | A **baixa** de uma parcela pode ser manual, por **retorno CNAB** ou por **PIX**; a baixa é **idempotente** (um mesmo pagamento não baixa em duplicidade). |
 | RN-034 | A **antecipação** de parcelas pode receber **desconto (deságio)** sobre juros/correção futuros, conforme política configurável. |
