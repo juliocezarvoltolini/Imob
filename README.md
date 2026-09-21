@@ -51,12 +51,14 @@ inadimplência, comissões, repasses).
 | [`docs/02-modelo-de-dominio.md`](docs/02-modelo-de-dominio.md) | Entidades principais, diagrama entidade-relacionamento (ER) e glossário do setor. |
 | [`docs/03-regras-de-negocio.md`](docs/03-regras-de-negocio.md) | Regras de negócio consolidadas (RN-xxx). |
 | [`docs/04-backlog-e-roadmap.md`](docs/04-backlog-e-roadmap.md) | Backlog de funcionalidades priorizado (MoSCoW) e roadmap sugerido em fases. |
+| [`docs/05-motor-calculo-financeiro.md`](docs/05-motor-calculo-financeiro.md) | Motor de cálculo financeiro: métodos (Price/SAC/simples), correção com carência, mora, antecipação, recálculo temporal, requisitos (RF-CALC) e exemplos numéricos. |
 
 Convenção de identificadores usada em todo o material:
 
 - **RF-XXX-000** — Requisito Funcional (o `XXX` indica o módulo, ex.: `RF-LOT-010`).
+- **RF-CALC-000** — Requisito do motor de cálculo financeiro.
 - **RNF-000** — Requisito Não-Funcional.
-- **RN-000** — Regra de Negócio.
+- **RN-000** — Regra de Negócio; **RC-00** — Regra de cálculo (motor financeiro).
 
 ## 4. Resumo executivo das funcionalidades (módulos)
 

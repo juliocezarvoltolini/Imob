@@ -266,6 +266,10 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 
 ### 4.8 Módulo Financeiro — Recebíveis (`FIN`)
 
+> O **motor de cálculo** (simulação, métodos Price/SAC, correção com carência,
+> mora, antecipação, recálculo temporal) está detalhado em
+> [`05-motor-calculo-financeiro.md`](05-motor-calculo-financeiro.md) (requisitos `RF-CALC`).
+
 | ID | Requisito | Prior. |
 |----|-----------|:------:|
 | RF-FIN-001 | Gerar o **plano de pagamento** (cronograma de parcelas) da venda: entrada, parcelas mensais, intermediárias (balões) e parcela final. | M |

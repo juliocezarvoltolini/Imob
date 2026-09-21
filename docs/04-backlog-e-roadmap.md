@@ -102,7 +102,8 @@ exportável.
 RF-MAP-001..006, RF-CRM-001/003/005/007/010, RF-RES-001..003/007,
 RF-VEN-001..003/005..008, RF-CTR-001/002/005/007, RF-FIN-001..005/007/010/012,
 RF-COM-001..004, RF-GED-001, RF-REL-001..003, RF-ADM-001/002/004/005,
-RF-PAR-001..003/005/007, RNF-001..004/007..009/011/012)*
+RF-PAR-001..003/005/007,
+RF-CALC-001..007/009/010/012/013/015/017, RNF-001..004/007..009/011/012)*
 
 ### Should
 Captação automática de leads e distribuição; visitas; assinatura eletrônica;
@@ -138,7 +139,7 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 0 — Fundação** | Base técnica | Autenticação, RBAC, multiempresa, **parametrização hierárquica** (herança Geral→Empreendimento→Setor→Lote→Contrato), auditoria, GED básico. |
 | **Fase 1 — Estoque e Mapa** | "Ver e cadastrar" | Empreendimentos, lotes, importação geográfica, cálculo de área/perímetro, mapa/espelho de vendas por status. |
 | **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas nas **três formas de pagamento**, efetivação da venda, contrato por template (para os **dois modelos jurídicos**). |
-| **Fase 3 — Financeiro** | "Receber" | Plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
+| **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** (Price/SAC, correção com carência, mora, antecipação), plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência e Mobilidade** | "Otimizar" | Dashboards avançados/BI, portal e app do corretor (offline), camadas avançadas do mapa, conciliação. |
