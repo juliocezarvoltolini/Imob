@@ -7,6 +7,7 @@ empreendimentos imobiliários rurais.
 - [2. Entidades principais](#2-entidades-principais)
 - [3. Máquina de estados do lote](#3-máquina-de-estados-do-lote)
 - [4. Glossário](#4-glossário)
+- [5. Parametrização hierárquica](#5-parametrização-hierárquica)
 
 ---
 
@@ -110,7 +111,7 @@ erDiagram
 | **Documento** | Arquivo anexado a empreendimento, lote, cliente, venda ou contrato (GED). |
 | **Interação** | Registro de contato/atendimento na linha do tempo do lead/cliente. |
 | **Log de Auditoria** | Registro imutável de operação sensível (quem/quando/o quê). |
-| **Parâmetro** | Configuração do sistema (índices, taxas, alçadas, templates, régua). |
+| **Parâmetro / Valor de Parâmetro** | Configuração de negócio resolvida por **herança** na cadeia Geral→Empreendimento→Setor→Lote→Contrato (ver seção 5). |
 
 ## 3. Máquina de estados do lote
 
@@ -176,3 +177,37 @@ Termos do setor imobiliário rural e do domínio do sistema.
 | **Repasse** | Valor transferido ao loteador/proprietário conforme contrato. |
 | **RBAC** | Controle de acesso baseado em papéis (perfis e permissões). |
 | **GED** | Gestão Eletrônica de Documentos. |
+
+## 5. Parametrização hierárquica
+
+Modelo de dados que dá suporte ao **princípio transversal** de parâmetros com
+herança e sobrescrita (seção 3.1 de
+[`01-requisitos.md`](01-requisitos.md#31-princípio-transversal--parametrização-hierárquica-com-herança)
+e regras RN-070 a RN-075).
+
+### 5.1 Entidades
+
+| Entidade | Descrição | Atributos-chave |
+|----------|-----------|-----------------|
+| **Parâmetro** | Definição de um parâmetro de negócio (metadado). | chave, nome, tipo de dado, **níveis aplicáveis**, valor **default**, **sensível** (sim/não), descrição |
+| **Valor de Parâmetro** | Valor atribuído a um parâmetro em um nível específico. | parâmetro, **nível** (Geral/Empreendimento/Setor/Lote/Contrato), **referência do nível** (id do empreendimento/setor/lote/contrato), valor, autor, data |
+| **Parâmetro do Contrato (snapshot)** | Cópia **congelada** dos valores efetivos no momento da venda. | contrato, parâmetro, valor efetivo, **origem** (nível de onde foi resolvido) |
+
+### 5.2 Cadeia de resolução (valor efetivo)
+
+A busca caminha do **mais específico** para o **mais geral**; o primeiro nível
+que define o parâmetro determina o valor efetivo:
+
+```mermaid
+flowchart TD
+    C[Contrato] -->|se ausente, herda de| L[Lote]
+    L -->|se ausente, herda de| S[Setor / Quadra]
+    S -->|se ausente, herda de| E[Empreendimento]
+    E -->|se ausente, herda de| G[Geral do sistema]
+    G -->|se ausente| D[Default do parâmetro]
+```
+
+> **Snapshot no contrato:** ao efetivar a venda, os valores efetivos são
+> resolvidos e **persistidos no contrato** (entidade *Parâmetro do Contrato*),
+> isolando contratos vigentes de mudanças futuras nos níveis superiores
+> (RN-073).

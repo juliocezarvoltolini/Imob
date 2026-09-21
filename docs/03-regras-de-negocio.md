@@ -5,6 +5,7 @@ funcionais de [`01-requisitos.md`](01-requisitos.md) e devem ser **validadas
 com o cliente** — vários parâmetros (prazos, percentuais, índices) são
 configuráveis e os valores abaixo são exemplos.
 
+- [Parametrização hierárquica](#parametrização-hierárquica)
 - [Estoque e disponibilidade de lotes](#estoque-e-disponibilidade-de-lotes)
 - [Reservas](#reservas)
 - [Precificação](#precificação)
@@ -17,6 +18,21 @@ configuráveis e os valores abaixo são exemplos.
 - [Segurança e auditoria](#segurança-e-auditoria)
 
 ---
+
+## Parametrização hierárquica
+
+Aplica-se a todos os parâmetros de negócio, tornando o sistema flexível e
+adaptável a cada empreendimento e a cada empresa usuária (ver seção 3.1 de
+[`01-requisitos.md`](01-requisitos.md#31-princípio-transversal--parametrização-hierárquica-com-herança)).
+
+| ID | Regra |
+|----|-------|
+| RN-070 | O **valor efetivo** de um parâmetro é o definido no **nível mais específico** da cadeia (**Contrato → Lote → Setor → Empreendimento → Geral**); se nenhum nível o define, aplica-se o **default** do sistema. |
+| RN-071 | Um nível mais específico **sobrescreve** o valor herdado. **Remover** o override em um nível **restaura** a herança do nível acima. |
+| RN-072 | Cada parâmetro declara os **níveis em que pode ser definido**; defini-lo em nível não aplicável é rejeitado. |
+| RN-073 | Ao **efetivar a venda / gerar o contrato**, os parâmetros efetivos são **congelados (snapshot) no contrato**; alterações posteriores em níveis superiores **não afetam contratos vigentes** (generaliza RN-021). Parâmetros que devam permanecer variáveis após a venda são marcados explicitamente. |
+| RN-074 | Alterar um parâmetro em um nível passa a valer, dali em diante, para todos os itens subordinados **sem override próprio**; itens com override permanecem inalterados. |
+| RN-075 | A definição/sobrescrita de **parâmetros sensíveis** (juros, índice, carência, retenção de distrato, alçadas) é restrita por **perfil/alçada** (RBAC) e registrada em **auditoria** (RN-060). |
 
 ## Estoque e disponibilidade de lotes
 

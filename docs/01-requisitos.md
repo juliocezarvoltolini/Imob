@@ -102,6 +102,51 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
+### 3.1 Princípio transversal — Parametrização hierárquica com herança
+
+Para o sistema **não ser engessado** e se adaptar à realidade de cada
+empreendimento e ao formato de negociação de cada empresa usuária, as **regras e
+parâmetros** de negócio são resolvidos por uma **cadeia hierárquica com herança
+e sobrescrita**:
+
+```
+Geral (sistema)  →  Empreendimento  →  Setor/Quadra  →  Lote  →  Contrato
+   (menos específico)  ───────────────────────────────►   (mais específico)
+```
+
+- Cada parâmetro pode ser **definido em qualquer nível aplicável**.
+- O **valor efetivo** é o do **nível mais específico** que define o parâmetro;
+  na ausência, herda-se do nível imediatamente acima, até o nível **Geral** e,
+  por fim, o **default** do sistema.
+- Um nível mais específico **sobrescreve** (override) o valor herdado; remover o
+  override restaura a herança.
+- Cada parâmetro declara **em quais níveis** pode ser definido (ex.: "prazo de
+  reserva" faz sentido em Geral/Empreendimento; "taxa de juros ao mês" pode
+  chegar até o Contrato).
+
+Resolução (do mais específico para o mais geral):
+
+```
+valorEfetivo(P, alvo) =
+    contrato.P  ??  lote.P  ??  setor.P  ??  empreendimento.P  ??  geral.P  ??  default(P)
+```
+
+**Congelamento no contrato (snapshot):** ao **efetivar a venda / gerar o
+contrato**, os parâmetros efetivos relevantes são **resolvidos e persistidos no
+contrato**. Assim, mudanças posteriores nos níveis superiores **não alteram
+contratos vigentes** (coerente com RN-021 e RN-073). É uma decisão de projeto
+recomendada — ver [`03-regras-de-negocio.md`](03-regras-de-negocio.md#parametrização-hierárquica).
+
+**Exemplos de parâmetros cascateáveis:** índice de correção, carência de
+correção, taxa de juros ao mês, método de amortização, multa e juros de mora,
+entrada mínima, prazo/nº de parcelas, alçadas de desconto, prazo de reserva,
+régua de cobrança, tabela/percentual e regra de comissão, percentual de retenção
+no distrato, valor por m² e fatores de valorização.
+
+**Rastreabilidade:** para qualquer valor efetivo, o sistema indica **de qual
+nível ele veio** (definido/herdado/sobrescrito) e registra as alterações em
+auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.16).
+
 ## 4. Requisitos funcionais
 
 > Prioridade segundo **MoSCoW**: **M** = Must (essencial ao MVP), **S** = Should,
@@ -281,7 +326,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-ADM-002 | Definir **perfis e permissões (RBAC)** granulares por módulo/ação e por empreendimento. | M |
 | RF-ADM-003 | Suportar **multiempresa/multifilial** e **multiempreendimento** com segregação de dados. | S |
 | RF-ADM-004 | Registrar **trilha de auditoria** (quem fez o quê e quando) nas operações sensíveis (preço, status de lote, baixa financeira, distrato). | M |
-| RF-ADM-005 | Parametrizar o sistema: índices de correção, taxas, alçadas, templates, régua de cobrança, tabelas de comissão. | M |
+| RF-ADM-005 | Parametrizar o sistema: índices de correção, taxas, alçadas, templates, régua de cobrança, tabelas de comissão — seguindo o modelo **hierárquico com herança** (ver módulo `PAR` e seção 3.1). | M |
 | RF-ADM-006 | Gerir **consentimentos e solicitações LGPD** (acesso, correção, exclusão/anonimização de dados). | S |
 
 ### 4.14 Portal do Cliente (`PCL`)
@@ -304,6 +349,23 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 | RF-PCO-003 | Acompanhar **comissões** e extratos. | S |
 | RF-PCO-004 | Acessar **materiais de venda** (plantas, tabela, apresentações). | C |
 | RF-PCO-005 | **App mobile** com uso em campo (modo offline) — **fora do escopo inicial**; nesta etapa o acesso é somente via navegador (web responsivo). | W |
+
+### 4.16 Módulo Parametrização Hierárquica (`PAR`) — transversal/fundacional
+
+> Mecanismo de configuração que permeia todos os módulos (ver seção 3.1).
+> Fundacional: entra na **Fase 0**.
+
+| ID | Requisito | Prior. |
+|----|-----------|:------:|
+| RF-PAR-001 | Manter um **catálogo de parâmetros** de negócio, cada um com chave, tipo de dado, **níveis aplicáveis**, valor **default** e descrição. | M |
+| RF-PAR-002 | Definir/editar valores de parâmetros em cada nível da cadeia (**Geral, Empreendimento, Setor/Quadra, Lote, Contrato**), respeitando os níveis aplicáveis de cada parâmetro. | M |
+| RF-PAR-003 | **Resolver o valor efetivo** de um parâmetro para um alvo (lote/contrato), aplicando **herança e sobrescrita** (o mais específico vence; default como último recurso). | M |
+| RF-PAR-004 | Exibir, para cada valor, a **origem** (definido neste nível / herdado de X / sobrescrito) e permitir **pré-visualizar o valor efetivo** de um lote/contrato. | S |
+| RF-PAR-005 | **Congelar (snapshot)** os parâmetros efetivos no contrato ao efetivar a venda, de modo que alterações posteriores em níveis superiores **não afetem contratos vigentes**. | M |
+| RF-PAR-006 | Controlar **quem pode definir/sobrescrever** cada parâmetro em cada nível (RBAC + alçadas), especialmente os sensíveis (juros, índice, retenção, alçada). | S |
+| RF-PAR-007 | **Auditar** alterações de parâmetros (parâmetro, nível, valor anterior/novo, autor, data/hora). | M |
+| RF-PAR-008 | Suportar **extensibilidade**: incluir novos parâmetros (e, idealmente, novos níveis) sem alteração estrutural do sistema. | C |
+| RF-PAR-009 | Ao alterar um parâmetro em um nível, **sinalizar o impacto** (quantos itens subordinados sem override serão afetados). | C |
 
 ## 5. Requisitos não-funcionais
 

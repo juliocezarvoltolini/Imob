@@ -79,6 +79,12 @@ Convenção de identificadores usada em todo o material:
 | 15 | **Portal do Corretor** | Estoque, reservas, propostas, comissões e materiais de venda. |
 | 16 | **Integrações** | Bancos, assinatura eletrônica, mapas, Receita/CEP, mensageria e contabilidade. |
 
+> **Mecanismo transversal — Parametrização hierárquica.** Para o sistema não ser
+> engessado, um mecanismo de parâmetros com **herança e sobrescrita**
+> (`Geral → Empreendimento → Setor → Lote → Contrato`, o nível mais específico
+> prevalece) permeia todos os módulos. Ver seção 3.1 de
+> [`docs/01-requisitos.md`](docs/01-requisitos.md#31-princípio-transversal--parametrização-hierárquica-com-herança).
+
 ## 5. Definições do cliente e questões em aberto
 
 As decisões abaixo foram **confirmadas com o cliente** e orientam todo o
@@ -100,6 +106,10 @@ material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.
   coordenadas e **dimensões planas** dos lotes. **Não** haverá interface de
   topógrafo nem tratamento de **complexidade topográfica** (relevo, curvas de
   nível, edição CAD).
+- **Parametrização flexível (arquitetura)**: parâmetros de negócio com
+  **herança e sobrescrita** na cadeia `Geral → Empreendimento → Setor → Lote →
+  Contrato` (o nível mais específico prevalece), com **congelamento no contrato**
+  no momento da venda. Deve ser implementada **desde o início** (Fase 0).
 
 Ainda a dimensionar: **volume** (nº de empreendimentos, lotes por empreendimento
 e contratos ativos) e a definição dos **provedores de integração** (banco,
