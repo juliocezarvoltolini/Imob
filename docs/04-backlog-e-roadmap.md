@@ -170,13 +170,16 @@ Exemplos no formato **Dado / Quando / Então** para orientar o refinamento.
   configuração, sem alteração deliberada de contratos vigentes),
 - **Então** o contrato vigente **mantém** 1% a.m.; apenas novas vendas usam 1,2%.
 
-**Alteração deliberada em massa de contratos vigentes (RF-PAR-010, RN-076/073a)**
+**Alteração deliberada em massa de contratos vigentes (RF-PAR-010, RN-076/077)**
 - **Dado** 300 contratos ativos com juros de **5% a.m.**,
 - **Quando** o gestor aplica uma **alteração em massa** para **1% a.m.** com
-  vigência a partir de 01/07/2026, justificativa e aprovação,
-- **Então** os 300 contratos passam a calcular **1% a partir de 01/07/2026**
-  (mantendo 5% antes dessa data), gerando aditivo/histórico e auditoria, e as
-  parcelas futuras são **recalculadas**.
+  vigência a partir de 01/07/2026, **abrangência = parcelas em aberto**,
+  justificativa e aprovação,
+- **Então** as **parcelas em aberto** dos 300 contratos são recalculadas a
+  **1%** e as **parcelas já pagas não são tocadas**, gerando aditivo/histórico e
+  auditoria;
+- **E**, se também marcasse **parcelas já pagas**, o sistema apuraria o valor
+  pago a mais e geraria **crédito** ao cliente.
 
 **Importação de lotes (RF-LOT-010)**
 - **Dado** um arquivo KML válido com 120 polígonos,

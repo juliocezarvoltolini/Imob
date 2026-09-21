@@ -282,7 +282,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-FIN-012 | Manter **extrato financeiro** por contrato (pagas, a vencer, vencidas, saldo devedor atualizado). | M |
 | RF-FIN-013 | Projetar **recebíveis futuros** (fluxo de caixa previsto) por empreendimento e consolidado. | S |
 | RF-FIN-014 | Suportar **múltiplas contas/carteiras bancárias** e centros de custo por empreendimento. | S |
-| RF-FIN-015 | **Recalcular** saldo devedor e parcelas respeitando a **vigência temporal** dos parâmetros do contrato (ex.: taxa de juros que muda a partir de uma data), preservando o histórico de valores aplicados em cada período. | S |
+| RF-FIN-015 | **Recalcular** saldo devedor e parcelas respeitando a **vigência temporal** dos parâmetros do contrato (ex.: taxa de juros que muda a partir de uma data), preservando o histórico de valores por período. O recálculo pode abranger parcelas **em aberto**, **a gerar** e/ou **já pagas** (estas apurando **crédito** ao cliente). | S |
 
 ### 4.9 Módulo Comissões (`COM`)
 
@@ -375,7 +375,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-PAR-007 | **Auditar** alterações de parâmetros (parâmetro, nível, valor anterior/novo, autor, data/hora). | M |
 | RF-PAR-008 | Suportar **extensibilidade**: incluir novos parâmetros (e, idealmente, novos níveis) sem alteração estrutural do sistema. | C |
 | RF-PAR-009 | Ao alterar um parâmetro em um nível, **sinalizar o impacto** (quantos itens subordinados sem override serão afetados). | C |
-| RF-PAR-010 | **Alterar parâmetros de contratos vigentes** — individual ou **em massa** — com seleção de escopo (contrato, empreendimento, filtro, todos), **data de vigência**, modo **retroativo** (recalcula desde a data) ou **prospectivo** (só daqui em diante), **justificativa** e **alçada/aprovação**, com **auditoria**; opcionalmente gerar **aditivo contratual** e **recalcular** o plano de pagamento. Operação **reversível**. | S |
+| RF-PAR-010 | **Alterar parâmetros de contratos vigentes** — individual ou **em massa** — com seleção de escopo de contratos (contrato, empreendimento, filtro, todos), **data de vigência**, **abrangência do recálculo** selecionável (parcelas **em aberto**, **a gerar** e/ou **já pagas** — estas apurando o que o cliente pagou a mais, com **crédito/estorno**), **justificativa** e **alçada/aprovação**, com **auditoria**; opcionalmente gerar **aditivo** e **recalcular** o plano. Operação **reversível**. | S |
 
 ## 5. Requisitos não-funcionais
 
