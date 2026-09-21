@@ -30,9 +30,11 @@ adaptável a cada empreendimento e a cada empresa usuária (ver seção 3.1 de
 | RN-070 | O **valor efetivo** de um parâmetro é o definido no **nível mais específico** da cadeia (**Contrato → Lote → Setor → Empreendimento → Geral**); se nenhum nível o define, aplica-se o **default** do sistema. |
 | RN-071 | Um nível mais específico **sobrescreve** o valor herdado. **Remover** o override em um nível **restaura** a herança do nível acima. |
 | RN-072 | Cada parâmetro declara os **níveis em que pode ser definido**; defini-lo em nível não aplicável é rejeitado. |
-| RN-073 | Ao **efetivar a venda / gerar o contrato**, os parâmetros efetivos são **congelados (snapshot) no contrato**; alterações posteriores em níveis superiores **não afetam contratos vigentes** (generaliza RN-021). Parâmetros que devam permanecer variáveis após a venda são marcados explicitamente. |
+| RN-073 | Ao **efetivar a venda**, os parâmetros efetivos são **resolvidos e persistidos no contrato** como **versão inicial (snapshot)**. Editar um parâmetro em nível superior **não altera** contratos vigentes — isso protege contra propagação **acidental**, mas **não** torna o contrato imutável (ver RN-076). Generaliza RN-021. |
+| RN-073a | Os **parâmetros do contrato são temporais (versionados por vigência)**: cada valor tem período de validade. O motor financeiro **recalcula** parcelas/saldo respeitando a **linha do tempo** dos parâmetros (ex.: juros de 5% até uma data e 1% a partir dela). |
 | RN-074 | Alterar um parâmetro em um nível passa a valer, dali em diante, para todos os itens subordinados **sem override próprio**; itens com override permanecem inalterados. |
 | RN-075 | A definição/sobrescrita de **parâmetros sensíveis** (juros, índice, carência, retenção de distrato, alçadas) é restrita por **perfil/alçada** (RBAC) e registrada em **auditoria** (RN-060). |
+| RN-076 | Alterações **deliberadas** de parâmetros de **contratos vigentes** são permitidas — **individualmente ou em massa** — mediante: seleção de **escopo** (contrato, empreendimento, filtro, todos), **data de vigência**, modo **retroativo** (recalcula desde a data) ou **prospectivo** (só daqui em diante), **justificativa**, **alçada/aprovação** e **auditoria**; quando aplicável, geram **aditivo contratual**. A operação é **reversível/estornável**. *(ex.: reduzir juros de contratos firmados de 5% para 1%)* |
 
 ## Estoque e disponibilidade de lotes
 

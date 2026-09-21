@@ -191,7 +191,7 @@ e regras RN-070 a RN-075).
 |----------|-----------|-----------------|
 | **Parâmetro** | Definição de um parâmetro de negócio (metadado). | chave, nome, tipo de dado, **níveis aplicáveis**, valor **default**, **sensível** (sim/não), descrição |
 | **Valor de Parâmetro** | Valor atribuído a um parâmetro em um nível específico. | parâmetro, **nível** (Geral/Empreendimento/Setor/Lote/Contrato), **referência do nível** (id do empreendimento/setor/lote/contrato), valor, autor, data |
-| **Parâmetro do Contrato (snapshot)** | Cópia **congelada** dos valores efetivos no momento da venda. | contrato, parâmetro, valor efetivo, **origem** (nível de onde foi resolvido) |
+| **Parâmetro do Contrato (temporal)** | Valores efetivos persistidos no contrato, **versionados por vigência**. A versão inicial é o *snapshot* da venda; alterações governadas criam **novas versões**. | contrato, parâmetro, valor, **vigência** (início/fim), versão, **origem** (snapshot / alteração em massa / aditivo), autor, data |
 
 ### 5.2 Cadeia de resolução (valor efetivo)
 
@@ -207,7 +207,10 @@ flowchart TD
     G -->|se ausente| D[Default do parâmetro]
 ```
 
-> **Snapshot no contrato:** ao efetivar a venda, os valores efetivos são
-> resolvidos e **persistidos no contrato** (entidade *Parâmetro do Contrato*),
-> isolando contratos vigentes de mudanças futuras nos níveis superiores
-> (RN-073).
+> **Snapshot protetivo, não imutável:** ao efetivar a venda, os valores efetivos
+> são persistidos no contrato como **versão inicial**, isolando-o de edições
+> **acidentais** nos níveis superiores (RN-073). Alterações **deliberadas**
+> (individual ou em massa — ex.: juros 5% → 1%) criam **novas versões com
+> vigência** e disparam recálculo (RN-073a, RN-076; RF-PAR-010, RF-FIN-015).
+> Por isso, os parâmetros do contrato são modelados como **temporais desde o
+> início**.

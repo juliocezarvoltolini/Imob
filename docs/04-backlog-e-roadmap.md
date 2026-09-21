@@ -19,9 +19,13 @@ Formato: **Como** \<ator\>, **quero** \<ação\>, **para** \<valor\>.
   empreendimento, setor, lote, contrato) com **herança e sobrescrita**, **para**
   adaptar o sistema à realidade de cada empreendimento sem engessar as regras.
   *(RF-PAR-001..003)*
-- Como **financeiro**, quero que os parâmetros sejam **congelados no contrato**
-  no momento da venda, **para** que reajustes futuros não afetem contratos
-  vigentes. *(RF-PAR-005, RN-073)*
+- Como **financeiro**, quero que os parâmetros sejam **persistidos no contrato**
+  no momento da venda, **para** que reajustes futuros **não afetem por engano**
+  contratos vigentes. *(RF-PAR-005, RN-073)*
+- Como **gestor/financeiro**, quero **alterar em massa** um parâmetro de
+  contratos já firmados (ex.: **reduzir juros de 5% para 1%**) com **data de
+  vigência** e recálculo, **para** cumprir decisões comerciais/jurídicas sem
+  refazer contrato a contrato. *(RF-PAR-010, RN-076, RN-073a)*
 
 ### Épico A — Cadastro e Estoque Georreferenciado
 - Como **backoffice**, quero cadastrar um empreendimento e importar seus lotes a
@@ -106,7 +110,8 @@ régua de cobrança; renegociação e antecipação; informe de IR; extrato de
 comissões e regra "conforme recebimento"; contas a pagar/receber, repasses e
 exportação contábil; checklist documental; portal do cliente e do corretor
 (web); multiempresa; relatórios de comissão e repasse; mensageria; validações
-Receita/CEP.
+Receita/CEP; **alteração de parâmetros de contratos vigentes** (individual/em
+massa) com vigência temporal e recálculo (RF-PAR-010, RF-FIN-015).
 
 ### Could
 Camadas informativas do mapa (APP/Reserva Legal), medição e modo apresentação;
@@ -133,7 +138,7 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 0 — Fundação** | Base técnica | Autenticação, RBAC, multiempresa, **parametrização hierárquica** (herança Geral→Empreendimento→Setor→Lote→Contrato), auditoria, GED básico. |
 | **Fase 1 — Estoque e Mapa** | "Ver e cadastrar" | Empreendimentos, lotes, importação geográfica, cálculo de área/perímetro, mapa/espelho de vendas por status. |
 | **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas nas **três formas de pagamento**, efetivação da venda, contrato por template (para os **dois modelos jurídicos**). |
-| **Fase 3 — Financeiro** | "Receber" | Plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato. |
+| **Fase 3 — Financeiro** | "Receber" | Plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência e Mobilidade** | "Otimizar" | Dashboards avançados/BI, portal e app do corretor (offline), camadas avançadas do mapa, conciliação. |
@@ -159,10 +164,19 @@ Exemplos no formato **Dado / Quando / Então** para orientar o refinamento.
 - **Então** o valor efetivo é **INCC** (herdado do Empreendimento) e a origem é
   exibida como "herdado de Empreendimento".
 
-**Congelamento no contrato (RF-PAR-005, RN-073)**
+**Proteção contra propagação acidental (RF-PAR-005, RN-073)**
 - **Dado** um contrato assinado com juros de 1% a.m. (resolvidos na venda),
-- **Quando** o Empreendimento altera depois o juros para 1,2% a.m.,
+- **Quando** o Empreendimento altera depois o juros para 1,2% a.m. (edição de
+  configuração, sem alteração deliberada de contratos vigentes),
 - **Então** o contrato vigente **mantém** 1% a.m.; apenas novas vendas usam 1,2%.
+
+**Alteração deliberada em massa de contratos vigentes (RF-PAR-010, RN-076/073a)**
+- **Dado** 300 contratos ativos com juros de **5% a.m.**,
+- **Quando** o gestor aplica uma **alteração em massa** para **1% a.m.** com
+  vigência a partir de 01/07/2026, justificativa e aprovação,
+- **Então** os 300 contratos passam a calcular **1% a partir de 01/07/2026**
+  (mantendo 5% antes dessa data), gerando aditivo/histórico e auditoria, e as
+  parcelas futuras são **recalculadas**.
 
 **Importação de lotes (RF-LOT-010)**
 - **Dado** um arquivo KML válido com 120 polígonos,

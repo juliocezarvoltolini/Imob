@@ -131,11 +131,19 @@ valorEfetivo(P, alvo) =
     contrato.P  ??  lote.P  ??  setor.P  ??  empreendimento.P  ??  geral.P  ??  default(P)
 ```
 
-**Congelamento no contrato (snapshot):** ao **efetivar a venda / gerar o
-contrato**, os parâmetros efetivos relevantes são **resolvidos e persistidos no
-contrato**. Assim, mudanças posteriores nos níveis superiores **não alteram
-contratos vigentes** (coerente com RN-021 e RN-073). É uma decisão de projeto
-recomendada — ver [`03-regras-de-negocio.md`](03-regras-de-negocio.md#parametrização-hierárquica).
+**Snapshot no contrato — protetivo, não imutável:** ao **efetivar a venda /
+gerar o contrato**, os parâmetros efetivos são **resolvidos e persistidos no
+contrato** como **versão inicial**. Isso evita que edições nos níveis superiores
+alterem **por engano** contratos vigentes (coerente com RN-021 e RN-073) — mas
+**não** significa imutabilidade. Alterações **deliberadas e auditadas** podem ser
+aplicadas a contratos já firmados, **individualmente ou em massa**, com **data de
+vigência** e recálculo (ver RF-PAR-010 e RN-073a/076). *Exemplo real: reduzir a
+taxa de juros de contratos vigentes de 5% para 1%.*
+
+Por isso, os **parâmetros do contrato são temporais (versionados por vigência)
+desde o início do projeto**: cada valor tem período de validade e o motor
+financeiro recalcula respeitando essa linha do tempo. Detalhes em
+[`03-regras-de-negocio.md`](03-regras-de-negocio.md#parametrização-hierárquica).
 
 **Exemplos de parâmetros cascateáveis:** índice de correção, carência de
 correção, taxa de juros ao mês, método de amortização, multa e juros de mora,
@@ -274,6 +282,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-FIN-012 | Manter **extrato financeiro** por contrato (pagas, a vencer, vencidas, saldo devedor atualizado). | M |
 | RF-FIN-013 | Projetar **recebíveis futuros** (fluxo de caixa previsto) por empreendimento e consolidado. | S |
 | RF-FIN-014 | Suportar **múltiplas contas/carteiras bancárias** e centros de custo por empreendimento. | S |
+| RF-FIN-015 | **Recalcular** saldo devedor e parcelas respeitando a **vigência temporal** dos parâmetros do contrato (ex.: taxa de juros que muda a partir de uma data), preservando o histórico de valores aplicados em cada período. | S |
 
 ### 4.9 Módulo Comissões (`COM`)
 
@@ -361,11 +370,12 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-PAR-002 | Definir/editar valores de parâmetros em cada nível da cadeia (**Geral, Empreendimento, Setor/Quadra, Lote, Contrato**), respeitando os níveis aplicáveis de cada parâmetro. | M |
 | RF-PAR-003 | **Resolver o valor efetivo** de um parâmetro para um alvo (lote/contrato), aplicando **herança e sobrescrita** (o mais específico vence; default como último recurso). | M |
 | RF-PAR-004 | Exibir, para cada valor, a **origem** (definido neste nível / herdado de X / sobrescrito) e permitir **pré-visualizar o valor efetivo** de um lote/contrato. | S |
-| RF-PAR-005 | **Congelar (snapshot)** os parâmetros efetivos no contrato ao efetivar a venda, de modo que alterações posteriores em níveis superiores **não afetem contratos vigentes**. | M |
+| RF-PAR-005 | **Persistir os parâmetros efetivos no contrato** ao efetivar a venda (versão inicial/snapshot), de forma **temporal/versionada por vigência**, de modo que edições em níveis superiores não afetem contratos vigentes por engano. | M |
 | RF-PAR-006 | Controlar **quem pode definir/sobrescrever** cada parâmetro em cada nível (RBAC + alçadas), especialmente os sensíveis (juros, índice, retenção, alçada). | S |
 | RF-PAR-007 | **Auditar** alterações de parâmetros (parâmetro, nível, valor anterior/novo, autor, data/hora). | M |
 | RF-PAR-008 | Suportar **extensibilidade**: incluir novos parâmetros (e, idealmente, novos níveis) sem alteração estrutural do sistema. | C |
 | RF-PAR-009 | Ao alterar um parâmetro em um nível, **sinalizar o impacto** (quantos itens subordinados sem override serão afetados). | C |
+| RF-PAR-010 | **Alterar parâmetros de contratos vigentes** — individual ou **em massa** — com seleção de escopo (contrato, empreendimento, filtro, todos), **data de vigência**, modo **retroativo** (recalcula desde a data) ou **prospectivo** (só daqui em diante), **justificativa** e **alçada/aprovação**, com **auditoria**; opcionalmente gerar **aditivo contratual** e **recalcular** o plano de pagamento. Operação **reversível**. | S |
 
 ## 5. Requisitos não-funcionais
 
