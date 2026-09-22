@@ -92,8 +92,9 @@ individual e fração ideal) e lotes com **georreferenciamento simplificado**
 geográfica (KML/GeoJSON/planilha); mapa/espelho de vendas por status; CRM básico
 e reservas; propostas com simulação e alçadas nas **três formas de pagamento**
 (à vista, bancário, próprio); efetivação de venda; geração de contrato por
-template; **plano de pagamento do financiamento próprio com juros mensais e
-correção IGP-M a partir do 13º mês, boletos e baixa (manual + CNAB)**;
+template; **plano de pagamento do financiamento próprio com evolução
+parametrizada da dívida (caso ESW: sem juros mensais + reajuste anual IGP-M +
+1% aditivo; configurável p/ Price/SAC), boletos e baixa (manual + CNAB)**;
 inadimplência básica; distrato; comissão com split (à vista e conforme
 recebimento); usuários/RBAC e auditoria; dashboard comercial e espelho
 exportável.
@@ -139,7 +140,7 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 0 — Fundação** | Base técnica | Autenticação, RBAC, multiempresa, **parametrização hierárquica** (herança Geral→Empreendimento→Setor→Lote→Contrato), auditoria, GED básico. |
 | **Fase 1 — Estoque e Mapa** | "Ver e cadastrar" | Empreendimentos, lotes, importação geográfica, cálculo de área/perímetro, mapa/espelho de vendas por status. |
 | **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas nas **três formas de pagamento**, efetivação da venda, contrato por template (para os **dois modelos jurídicos**). |
-| **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** (Price/SAC, correção com carência, mora, antecipação), plano de pagamento do financiamento próprio (**juros mensais + IGP-M a partir do 13º mês**), boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
+| **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** parametrizado (juros nenhum/Price/SAC + reajuste índice + acréscimo fixo; caso ESW: reajuste anual IGP-M + 1% sem juros mensais), mora, antecipação; boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência e Mobilidade** | "Otimizar" | Dashboards avançados/BI, portal e app do corretor (offline), camadas avançadas do mapa, conciliação. |

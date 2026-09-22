@@ -59,7 +59,7 @@ Valores a aplicar no nível **Geral** (a operação é uniforme; poucos override
 | Entrada mínima | 6%–10% (faixa) | Geral |
 | Entrada parcelável | Sim, até 4× | Geral |
 | Prazo de parcelamento | até 120× (padrão) | Geral |
-| Método de reajuste | **Reajuste anual = IGP-M (12m) + 1% fixo** | Geral |
+| Método de reajuste | **Reajuste anual = IGP-M (12m) + 1% aditivo** | Geral |
 | Índice de correção | IGP-M | Geral |
 | Carência de correção | 12 meses | Geral |
 | Periodicidade do reajuste | Anual (aniversário) | Geral |
@@ -75,24 +75,29 @@ Valores a aplicar no nível **Geral** (a operação é uniforme; poucos override
 | Repasse ao loteador | Só em parcerias, valor **variável** (por acordo) | Empreendimento |
 | Precificação | Tabela pronta; fator de valorização = tamanho | Empreendimento |
 
-## 4. Divergência importante a confirmar — modelo de juros/correção
+## 4. Modelo de juros/correção — confirmado
 
-O que foi dito antes (turno anterior): *“juros ao mês + correção IGP-M depois de
-um ano”*. O que o formulário da ESW descreve é **diferente**:
+Confirmado com o cliente do projeto (substitui a premissa anterior de “1% ao mês”,
+**descartada**):
 
-- **Não há juros mensais compostos.** A parcela fica **fixa no valor do mês**.
-- Uma vez por ano (a partir do 13º mês) o saldo/parcela é **reajustado** por
-  **IGP-M acumulado dos últimos 12 meses + 1% (contratual)**.
+- **Sem juros mensais.** A parcela fica **fixa no valor do mês**.
+- **Reajuste anual** (a partir do 13º mês): **IGP-M acumulado (12m) + 1%**, com o
+  **1% somado** ao índice (**aditivo**), não composto.
+- É, no momento, o **único caso** real.
 
-Ou seja, é um **reajuste anual de aniversário = índice + acréscimo fixo**, e não a
-Tabela Price com 1% a.m. Isso **refina o motor de cálculo** ([`05`](05-motor-calculo-financeiro.md)):
-o reajuste anual precisa combinar **índice + um percentual fixo** (a “taxa
-contratual”), com opção **sem juros mensais**.
+```
+Fator anual (aditivo) = 1 + ( IGP-M₁₂ₘ + 1% )   → aplicado ao saldo devedor
+Parcelas remanescentes recalculadas (sem juros ⇒ saldo / nº restante)
+```
 
-> **A confirmar com o cliente do projeto:** (1) o acréscimo de 1% é **somado** ao
-> IGP-M (aditivo) ou **composto** (×1,01)? (2) Existe algum caso com juros mensais
-> (Price/SAC), ou o padrão é sempre “sem juros + reajuste anual”? (3) A premissa
-> anterior (“1% ao mês”) vale para outro cliente/cenário, ou deve ser descartada?
+**Decisão de produto:** o motor é **parametrizado** para atender este caso **e**
+padrões de mercado (Price/SAC com juros mensais, correção mensal), sem engessar.
+Os dois mecanismos — **juros de financiamento** e **reajuste (índice + acréscimo
+fixo)** — são configuráveis e qualquer um pode ser `nenhum`. Ver
+[`05`, §5–§6](05-motor-calculo-financeiro.md#5-métodos-de-amortização).
+
+Residual a validar: o reajuste recalcula a partir do **saldo devedor** (assumido)
+ou corrige a **parcela** na competência?
 
 ## 5. Outras implicações para os requisitos
 

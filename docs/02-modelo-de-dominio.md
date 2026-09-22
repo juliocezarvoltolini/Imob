@@ -97,7 +97,7 @@ erDiagram
 
 | Entidade | Descrição | Atributos-chave |
 |----------|-----------|-----------------|
-| **Plano de Pagamento** | Cronograma financeiro da venda. | entrada, nº parcelas, índice de correção, **carência de correção** (ex.: 12 meses), taxa de juros ao mês, método (Price/SAC/simples) |
+| **Plano de Pagamento** | Cronograma financeiro da venda. | entrada, nº parcelas, **juros** (método nenhum/Price/SAC/simples + taxa ao mês), **reajuste** (índice, **acréscimo fixo** aditivo/composto, periodicidade mensal/anual, **carência**), aplicação (saldo/parcela) |
 | **Parcela** | Item do plano de pagamento. | número, tipo (entrada/mensal/balão/final), vencimento, valor, saldo, status |
 | **Boleto / Cobrança** | Documento de cobrança da parcela. | nosso número, linha digitável/PIX, vencimento, valor, status |
 | **Recebimento** | Baixa de pagamento. | parcela, valor, data, forma, origem (manual/CNAB/PIX) |
@@ -166,7 +166,8 @@ Termos do setor imobiliário rural e do domínio do sistema.
 | **Distrato** | Rescisão do contrato de compra e venda. |
 | **Financiamento próprio / Carteira** | Parcelamento concedido diretamente pela loteadora/imobiliária. |
 | **Financiamento bancário** | Crédito concedido por um agente financeiro; o banco quita o valor à loteadora e o comprador paga ao banco. |
-| **Carência de correção** | Período inicial do contrato sem correção monetária (na prática atual, 12 meses; a correção IGP-M passa a incidir a partir do 13º mês). |
+| **Carência de correção** | Período inicial do contrato sem reajuste (caso ESW: 12 meses; o reajuste passa a incidir no 13º mês). |
+| **Acréscimo fixo do reajuste** | Percentual somado (aditivo) ou composto ao índice no reajuste periódico (caso ESW: +1% ao IGP-M anual). |
 | **Balão / Intermediária** | Parcela de maior valor em intervalos (anual/semestral). |
 | **Correção monetária** | Atualização do saldo devedor por um índice (INCC, IGP-M, IPCA). |
 | **Price / SAC** | Sistemas de amortização de financiamento (parcelas fixas / amortização constante). |

@@ -56,12 +56,13 @@ no contrato, versionadas por vigência:
 | Entrada / sinal | R$ 20.000 ou 15% | Valor ou percentual |
 | Permuta / dação | R$ 10.000 | Abate do valor financiado |
 | Desconto comercial | 3% | Respeita alçada (RN-022/025) |
-| Método de amortização | Price / SAC / juros simples | Configurável |
-| Taxa de juros | 1% a.m. | Regra atual do cliente |
+| Método de juros | nenhum / Price / SAC / juros simples | Configurável (**ESW: nenhum**) |
+| Taxa de juros | — (ESW não usa) | Só quando o método ≠ nenhum |
 | Prazo (nº de parcelas) | 120 | |
-| Índice de correção | IGP-M | Configurável (IGP-M/INCC/IPCA) |
-| Carência de correção | 12 meses | Correção a partir do 13º mês (regra atual) |
-| Periodicidade da correção | anual / mensal | **A confirmar** (ver §16) |
+| Índice de reajuste | IGP-M | Configurável (IGP-M/INCC/IPCA/nenhum) |
+| Acréscimo fixo do reajuste | +1% aditivo (ESW) | Somado ao índice (aditivo/composto) |
+| Carência de reajuste | 12 meses | Reajuste a partir do 13º mês (caso ESW) |
+| Periodicidade do reajuste | anual / mensal | **ESW: anual** |
 | Parcelas intermediárias (balões) | anual, R$ 5.000 | Opcional |
 | Multa por atraso | 2% | |
 | Juros de mora | 1% a.m. (pro rata die) | |
@@ -102,8 +103,15 @@ valorFinanciado (saldo inicial)
 
 ## 5. Métodos de amortização
 
+> **Modelo geral (dois mecanismos).** A dívida evolui por **juros de financiamento**
+> (esta seção) e **reajuste periódico** (§6), **independentes e combináveis** —
+> cada um pode ser **`nenhum`**. O caso real **ESW** usa **juros = nenhum** +
+> reajuste anual; padrões de mercado usam **Price/SAC** com juros mensais. A
+> tabela de **modelos suportados** está em §6.
+
 Notação: `PV` = valor financiado; `i` = taxa de juros ao período (ex.: 0,01);
-`n` = nº de parcelas; `saldo₀ = PV`.
+`n` = nº de parcelas; `saldo₀ = PV`. Com **método `nenhum`** (sem juros), a
+parcela-base é `saldo / nº de parcelas restantes`, evoluindo só pelo reajuste (§6).
 
 ### 5.1 Price (sistema francês — parcela fixa)
 
@@ -157,28 +165,46 @@ resultante (RC-04).
 
 ## 6. Correção monetária
 
-Atualiza o **saldo devedor** (e, por consequência, as parcelas remanescentes)
-por um **índice** (IGP-M/INCC/IPCA), respeitando a **carência**.
+Generalizada como **reajuste periódico**: atualiza o **saldo devedor** (e as
+parcelas remanescentes) por **índice + acréscimo fixo**, respeitando a
+**carência**. Combina-se com os juros de financiamento (§5); qualquer um pode ser
+`nenhum`.
 
-- **Carência** (regra atual): **sem correção nos 12 primeiros meses**; incide a
-  partir do **13º mês** (parâmetro `carenciaCorrecaoMeses`, default 12).
+- **Índice**: IGP-M / INCC / IPCA / `nenhum`.
+- **Acréscimo fixo**: percentual **somado** (aditivo) ou **composto** ao índice
+  no reajuste (caso **ESW**: **+1% aditivo** ao IGP-M anual).
+- **Carência**: sem reajuste nos primeiros meses; incide após (parâmetro
+  `carenciaReajusteMeses`, default 12 — caso ESW, do 13º mês em diante).
 - **Periodicidade** (configurável):
-  - **Anual (aniversário/data-base)**: no aniversário, o saldo é multiplicado
-    pelo **índice acumulado** do período; as parcelas restantes são recalculadas.
+  - **Anual (aniversário/data-base)** *(ESW)*: no aniversário, o saldo é
+    atualizado pelo **fator do período**; as parcelas restantes são recalculadas.
   - **Mensal**: cada parcela é corrigida pela variação do índice desde a
     data-base.
-- **Defasagem**: usa o índice de referência conforme defasagem configurada
-  (ex.: IGP-M do mês anterior) (RC-08).
+- **Defasagem**: índice de referência conforme defasagem configurada (ex.: IGP-M
+  do mês anterior) (RC-08).
 
 ```
-Correção anual (no aniversário t):
-    fatorₜ      = índiceAcumulado(período)      // ex.: 1,04 para 4%
-    saldoₜ⁺     = saldoₜ × fatorₜ
-    parcelas remanescentes recalculadas sobre saldoₜ⁺ pelo método vigente
+Reajuste anual (no aniversário t), modo aditivo:
+    fatorₜ   = 1 + ( índiceAcumulado(12m) + acréscimoFixo )   // ESW: IGP-M₁₂ₘ + 1%
+    saldoₜ⁺  = saldoₜ × fatorₜ
+    parcelas remanescentes recalculadas sobre saldoₜ⁺ pelo método de juros
+    vigente (ESW: método = nenhum ⇒ saldoₜ⁺ / nº de parcelas restantes)
 ```
 
-> A escolha **mensal x anual** está em aberto (§16). O motor implementa ambas por
-> configuração.
+### 6.1 Modelos suportados (exemplos)
+
+O par (juros, reajuste) parametriza tanto o caso real quanto padrões de mercado:
+
+| Modelo | Juros (§5) | Reajuste (§6) |
+|--------|-----------|---------------|
+| **ESW (caso real)** | `nenhum` | Anual, IGP-M + **1% aditivo**, carência 12m |
+| Price de mercado | Price, ex. 1% a.m. | Anual ou `nenhum`, conforme contrato |
+| SAC | SAC, ex. 1% a.m. | Configurável |
+| Sem juros e sem correção | `nenhum` | `nenhum` |
+| Só correção mensal | `nenhum` | Mensal por índice |
+
+> O motor implementa todas as combinações por configuração — atende o caso ESW e
+> os cenários facilmente previsíveis, sem engessar.
 
 ## 7. Encargos por atraso (mora)
 
@@ -259,8 +285,8 @@ Para cada parcela e cada recálculo, o motor registra a **memória de cálculo**
 | RF-CALC-002 | Compor o **valor financiado** (preço − entrada − permuta/dação − desconto). | M |
 | RF-CALC-003 | Suportar **métodos** Price, SAC e juros simples (configurável), além de **à vista**. | M |
 | RF-CALC-004 | Suportar **entrada/sinal**, **parcelas mensais**, **intermediárias/balões** e **parcela final**. | M |
-| RF-CALC-005 | Aplicar **correção monetária** por índice, com **carência** e **periodicidade** (mensal/anual) configuráveis. | M |
-| RF-CALC-006 | Aplicar **juros ao mês** conforme o método selecionado. | M |
+| RF-CALC-005 | Aplicar **reajuste periódico** por **índice + acréscimo fixo** (aditivo/composto), com **carência** e **periodicidade** (mensal/anual) configuráveis. | M |
+| RF-CALC-006 | Aplicar **juros de financiamento** conforme o método (`nenhum`/Price/SAC/juros simples). | M |
 | RF-CALC-007 | Calcular **encargos de mora** (multa + juros de mora + correção) na quitação em atraso. | M |
 | RF-CALC-008 | Calcular **antecipação** com **deságio** configurável. | S |
 | RF-CALC-009 | Aplicar **arredondamento** com alocação da diferença de centavos (default: última parcela). | M |
@@ -282,7 +308,7 @@ Para cada parcela e cada recálculo, o motor registra a **memória de cálculo**
 | RC-02 | A **entrada/sinal** não compõe o valor financiado; apenas o saldo após deduções sofre juros/correção. |
 | RC-03 | `valorFinanciado = 0` ⇒ operação **à vista**, sem juros nem correção. |
 | RC-04 | Parcelas **intermediárias** e **final** integram o mesmo fluxo do método escolhido, abatendo saldo na sua competência. |
-| RC-05 | **Correção** só incide após a **carência** (default 12 meses) e conforme a **periodicidade** parametrizada. |
+| RC-05 | O **reajuste** (índice + **acréscimo fixo**, aditivo/composto) só incide após a **carência** (default 12 meses) e conforme a **periodicidade** parametrizada. Juros de financiamento e reajuste são independentes; qualquer um pode ser `nenhum` (ESW: juros = nenhum). |
 | RC-06 | **Mora** = multa + juros de mora (pro rata die por padrão) + correção do período em atraso, todos parametrizáveis. |
 | RC-07 | **Antecipação/quitação** usam o **saldo devedor atualizado na data**, com deságio conforme política. |
 | RC-08 | A correção usa o índice conforme **data-base** e **defasagem** configuradas. |
@@ -321,13 +347,15 @@ Parcela 2  = 833,33 +   991,67 = 1.825,00
 Parcela 120 = 833,33 + 8,33   =   841,66
 ```
 
-### 15.3 Correção após carência (anual)
+### 15.3 Reajuste anual — caso ESW (sem juros mensais, IGP-M + 1% aditivo)
 
-Contrato com carência de 12 meses e IGP-M acumulado de 4% no 1º ano:
+Carência 12 meses; no aniversário, IGP-M acumulado de 4% no ano:
 
 ```
-No 13º mês: saldo devedor × 1,04 ⇒ parcelas remanescentes recalculadas
-Antes do 13º mês: sem correção (só juros do método)
+Meses 1–12: parcela fixa = saldo inicial / nº de parcelas (sem juros, sem reajuste)
+No 13º mês:  fator   = 1 + (4% + 1%) = 1,05
+             saldo₁₂⁺ = saldo₁₂ × 1,05
+             parcela  = saldo₁₂⁺ / nº de parcelas restantes
 ```
 
 ### 15.4 Encargos de mora
@@ -351,11 +379,11 @@ Contrato com juros 5% a.m., vigência da alteração 01/07/2026, abrangência "e
 
 ## 16. Questões em aberto
 
-1. **Periodicidade da correção** após a carência: **mensal** ou **anual**
-   (aniversário)? Reajusta **saldo** e recalcula parcelas, ou corrige cada
-   parcela na competência? *(Caso real ESW — [`07`](07-perfil-cliente-esw.md) — usa
-   **reajuste anual = IGP-M(12m) + 1% fixo**, sem juros mensais: o motor precisa
-   suportar um **acréscimo percentual fixo somado ao índice** no reajuste.)*
+1. **Reajuste do financiamento direto** — *resolvido (ESW, [`07`](07-perfil-cliente-esw.md))*:
+   **sem juros mensais**; **reajuste anual = IGP-M(12m) + 1% aditivo**, carência 12
+   meses; é o **único caso** atual e a premissa “1% ao mês” foi **descartada**.
+   Residual: o reajuste recalcula a partir do **saldo devedor** (assumido) ou
+   corrige a **parcela** na competência? — a validar.
 2. **Convenção de juros simples/linear** (fórmula exata), se esse método for
    usado além de Price/SAC.
 3. **Mora**: pro rata die x mês cheio; a **multa** incide sobre parcela

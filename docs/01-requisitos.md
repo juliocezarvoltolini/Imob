@@ -28,9 +28,10 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 - **Contratos** e documentação da venda.
 - **Vendas nas três formas de pagamento**: **à vista**, **financiamento
   bancário** e **financiamento próprio (carteira)**.
-- **Financeiro de recebíveis** do financiamento próprio: carnês, **juros
-  mensais**, **correção pelo IGP-M a partir do 13º mês**, cobrança,
-  inadimplência, distrato e repasses. Métodos e índices **configuráveis**.
+- **Financeiro de recebíveis** do financiamento próprio: carnês, **evolução da
+  dívida parametrizada** (juros de financiamento e/ou reajuste por índice +
+  acréscimo fixo), cobrança, inadimplência, distrato e repasses. Caso real ESW:
+  **sem juros mensais + reajuste anual IGP-M + 1%**; configurável para Price/SAC.
 - **Comissionamento** de corretores e parceiros (à vista e conforme recebimento).
 - **Portais web** de autoatendimento (cliente e corretor).
 - **Relatórios e indicadores** gerenciais.
@@ -273,7 +274,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | ID | Requisito | Prior. |
 |----|-----------|:------:|
 | RF-FIN-001 | Gerar o **plano de pagamento** (cronograma de parcelas) da venda: entrada, parcelas mensais, intermediárias (balões) e parcela final. | M |
-| RF-FIN-002 | Aplicar **juros** (métodos configuráveis: Price, SAC, juros simples) e **correção monetária** por índice contratado (IGP-M, INCC, IPCA, etc.), com **carência de correção configurável**. Regra atual do cliente: **juros ao mês** + **correção pelo IGP-M somente a partir do 13º mês** de contrato. | M |
+| RF-FIN-002 | Aplicar a **evolução da dívida** por **dois mecanismos configuráveis e combináveis**: (a) **juros de financiamento** (método `nenhum`/Price/SAC/juros simples, taxa ao mês) e (b) **reajuste periódico** por índice (IGP-M/INCC/IPCA) somado de um **acréscimo fixo** (aditivo ou composto), com **periodicidade** (mensal/anual) e **carência**. Caso real ESW: **sem juros mensais** + **reajuste anual = IGP-M + 1% aditivo**, carência 12 meses. Detalhes em [`05`](05-motor-calculo-financeiro.md). | M |
 | RF-FIN-003 | **Emitir boletos/carnê** (integração bancária) e disponibilizar a **2ª via**; suportar **PIX** (QR/copia-e-cola). | M |
 | RF-FIN-004 | Registrar **recebimentos**: baixa manual, baixa automática por **retorno bancário (CNAB 240/400)** e conciliação por PIX. | M |
 | RF-FIN-005 | Calcular **juros, multa e correção por atraso** na quitação de parcelas vencidas. | M |
@@ -450,10 +451,12 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 1. **Formas de pagamento**: o sistema suporta **as três** — **à vista**,
    **financiamento bancário** e **financiamento próprio (carteira)**. Todas no
    escopo do MVP. *(RF-VEN-005)*
-2. **Financiamento direto (prática atual)**: **juros ao mês** + **correção pelo
-   IGP-M somente a partir do 13º mês** de contrato (carência de 12 meses sem
-   correção). Os **métodos de amortização e índices são configuráveis** e todos
-   devem ser implementados. *(RF-FIN-002, RN-031, RN-031a)*
+2. **Financiamento direto (caso real ESW, confirmado)**: **sem juros mensais**;
+   **reajuste anual = IGP-M acumulado (12m) + 1% fixo (aditivo)**, a partir do 2º
+   ano (carência de 12 meses). A premissa anterior de “1% ao mês” foi
+   **descartada**. O modelo é **parametrizado** para também cobrir padrões de
+   mercado (Price/SAC com juros mensais, correção mensal, etc.).
+   *(RF-FIN-002, RN-031, RN-031a; caso em [`07`](07-perfil-cliente-esw.md))*
 3. **Modelagem jurídica**: suportar **os dois modelos** — loteamento/
    desmembramento com **matrícula individual por lote** e **condomínio por
    fração ideal**. *(RF-EMP-011)*
@@ -482,10 +485,11 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 
 ### 9.3 Questões ainda em aberto
 
-1. **Correção do financiamento direto**: a taxa de **juros ao mês** é única ou
-   varia por empreendimento/campanha? Após o 13º mês, a correção pelo IGP-M é
-   **mensal** ou **anual** (no aniversário)? Há reajuste da parcela ou apenas do
-   saldo devedor?
+1. **Correção do financiamento direto** — *resolvido para a ESW* (ver
+   [`07`](07-perfil-cliente-esw.md)): sem juros mensais; **reajuste anual =
+   IGP-M(12m) + 1% aditivo**, carência 12 meses. Residual a validar: o reajuste
+   recalcula as parcelas a partir do **saldo devedor** ou apenas atualiza o valor
+   da parcela na competência? (assume-se saldo devedor).
 2. **Parcelas intermediárias (balões)**: são praticadas? Em qual periodicidade?
 3. **Distrato**: qual a **política de retenção** e o modelo de devolução
    (percentuais, cláusula penal, parcelamento da devolução)?

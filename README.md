@@ -96,9 +96,12 @@ material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.
 
 - **Formas de pagamento**: o sistema suporta **financiamento próprio (carteira)**,
   **à vista** e **financiamento bancário** — os três são escopo do MVP.
-- **Financiamento direto (prática atual)**: **juros ao mês** + **correção pelo
-  IGP-M a partir do 13º mês** (sem correção no primeiro ano de contrato). Os
-  métodos de amortização e índices são **configuráveis** (todos implementados).
+- **Financiamento direto — modelo parametrizado**. Caso real (ESW): **sem juros
+  mensais**; **reajuste anual = IGP-M acumulado (12m) + 1% fixo (aditivo)**, a
+  partir do 2º ano (carência de 12 meses). O motor é **configurável** para cobrir
+  também padrões de mercado (Tabela **Price**/**SAC** com juros mensais, correção
+  mensal, etc.). Ver [`docs/05`](docs/05-motor-calculo-financeiro.md) e
+  [`docs/07`](docs/07-perfil-cliente-esw.md).
 - **Modelagem jurídica**: o sistema suporta **os dois modelos** —
   loteamento/desmembramento com **matrícula individual por lote** e **condomínio
   por fração ideal**.
