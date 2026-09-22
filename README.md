@@ -53,6 +53,7 @@ inadimplência, comissões, repasses).
 | [`docs/04-backlog-e-roadmap.md`](docs/04-backlog-e-roadmap.md) | Backlog de funcionalidades priorizado (MoSCoW) e roadmap sugerido em fases. |
 | [`docs/05-motor-calculo-financeiro.md`](docs/05-motor-calculo-financeiro.md) | Motor de cálculo financeiro: métodos (Price/SAC/simples), correção com carência, mora, antecipação, recálculo temporal, requisitos (RF-CALC) e exemplos numéricos. |
 | [`docs/06-questionario-configuracao.md`](docs/06-questionario-configuracao.md) | Questionário de descoberta (linguagem acessível) para entender a operação do cliente e configurar os parâmetros; inclui anexo interno de mapeamento. |
+| [`docs/07-perfil-cliente-esw.md`](docs/07-perfil-cliente-esw.md) | Consolidação de um questionário preenchido (caso real ESW): respostas, configuração inicial de parâmetros e refinamentos aos requisitos. |
 
 Convenção de identificadores usada em todo o material:
 

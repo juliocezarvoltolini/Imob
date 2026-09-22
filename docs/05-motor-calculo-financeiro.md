@@ -353,7 +353,9 @@ Contrato com juros 5% a.m., vigência da alteração 01/07/2026, abrangência "e
 
 1. **Periodicidade da correção** após a carência: **mensal** ou **anual**
    (aniversário)? Reajusta **saldo** e recalcula parcelas, ou corrige cada
-   parcela na competência?
+   parcela na competência? *(Caso real ESW — [`07`](07-perfil-cliente-esw.md) — usa
+   **reajuste anual = IGP-M(12m) + 1% fixo**, sem juros mensais: o motor precisa
+   suportar um **acréscimo percentual fixo somado ao índice** no reajuste.)*
 2. **Convenção de juros simples/linear** (fórmula exata), se esse método for
    usado além de Price/SAC.
 3. **Mora**: pro rata die x mês cheio; a **multa** incide sobre parcela
