@@ -508,7 +508,9 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
    nível, edição CAD/DWG). *(seção 1.2; RF-LOT-007/010)*
 7. **Documentos fiscais**: o sistema **emite a NF-e ABI (modelo 77)**, obrigatória a
    partir de 01/12/2026 (regime regular de IBS/CBS) ou 01/01/2027 (Simples
-   Nacional). *(módulo `FIS`, §4.17)*
+   Nacional). **Prioridade de entrega:** emissão na venda e cancelamento
+   disponíveis até **01/01/2027**; os eventos de pagamento seguem o cronograma
+   do leiaute. *(módulo `FIS`, §4.17)*
 
 ### 9.2 Premissas adotadas
 

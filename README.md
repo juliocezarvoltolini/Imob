@@ -118,7 +118,7 @@ material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.
   nível, edição CAD).
 - **Documentos fiscais:** o sistema emite a **NF-e ABI (modelo 77)**, obrigatória a
   partir de 01/12/2026 (regime regular de IBS/CBS) ou 01/01/2027 (Simples
-  Nacional).
+  Nacional). **Prioridade de entrega:** disponível até **01/01/2027**.
 - **Modelo de negócio: SaaS multiempresa.** A plataforma é um produto próprio,
   oferecido por assinatura (implantação + mensalidade) a várias imobiliárias, com
   isolamento de dados por empresa. A ESW é a primeira cliente.

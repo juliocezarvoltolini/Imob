@@ -162,6 +162,12 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 > ESW, a entrada em operação ocorre ao final do núcleo da carteira (cadastros,
 > contratos, gestão financeira e cobrança), com a migração como última etapa.
 
+> **Prioridade regulatória — NF-e ABI até 01/01/2027.** A emissão na venda e o
+> cancelamento (RF-FIS-001/002/004) são antecipados junto com os cadastros
+> mínimos de que dependem (empresa, imóvel com dados fiscais, cliente,
+> venda/contrato). Os eventos de pagamento (RF-FIS-003) acompanham o Financeiro
+> e o cronograma do leiaute. Na proposta da ESW, é a prioridade da Fase 1.
+
 ```mermaid
 graph LR
     F0[Fase 0<br/>Fundação] --> F1[Fase 1<br/>Estoque e Mapa]

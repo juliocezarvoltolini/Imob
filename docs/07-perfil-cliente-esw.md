@@ -29,9 +29,9 @@ e o motor de cálculo ([`05`](05-motor-calculo-financeiro.md)).
 > distrato, quitação)**, deixando CRM, mapa e portais para depois. A **migração
 > dos contratos existentes** é a última etapa da implantação da ESW, ao final do
 > núcleo da carteira (ver a nota do [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases)).
-> A **NF-e ABI (modelo 77)** precisa estar disponível nessa entrada em operação:
-> é obrigatória a partir de **01/12/2026** (regime regular) ou **01/01/2027**
-> (Simples Nacional).
+> A **NF-e ABI (modelo 77)** é a **prioridade da Fase 1**: emissão na venda e
+> cancelamento disponíveis **até 01/01/2027** (a obrigação começa em 01/12/2026
+> no regime regular e em 01/01/2027 no Simples Nacional).
 
 ## 2. Respostas consolidadas por tema
 
@@ -124,7 +124,8 @@ ou corrige a **parcela** na competência?
 - **Escopo/priorização ESW:** priorizar **carteira/cobrança**; **mapa, CRM e
   portais** ficam para fases posteriores; a **migração dos ~215 contratos** é a
   última etapa da implantação.
-- **Fiscal:** a NF-e ABI entra no núcleo da entrada em operação. Pendentes com a
+- **Fiscal:** a NF-e ABI é a **prioridade da Fase 1**, disponível **até
+  01/01/2027** (emissão na venda e cancelamento). Pendentes com a
   contabilidade da ESW: **regime tributário** (define a data de início),
   **certificado digital** e o tratamento das parcelas dos **contratos anteriores**
   à obrigatoriedade.
