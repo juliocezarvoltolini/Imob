@@ -144,7 +144,8 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** parametrizado (juros nenhum/Price/SAC + reajuste índice + acréscimo fixo; caso ESW: reajuste anual IGP-M + 1% sem juros mensais), mora, antecipação; boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
-| **Fase 6 — Inteligência e Mobilidade** | "Otimizar" | Dashboards avançados/BI, portal e app do corretor (offline), camadas avançadas do mapa, conciliação. |
+| **Fase 6 — Inteligência** | "Otimizar" | Dashboards avançados/BI, portal do corretor (web), camadas informativas do mapa, conciliação. |
+| **Fase 7 — Implantação** | "Entrar em operação" | **Migração da carteira** existente (contratos, saldos, planos e histórico), conferência de saldos migrados, configuração final dos parâmetros/presets, treinamento e go-live. |
 
 ```mermaid
 graph LR
@@ -153,7 +154,8 @@ graph LR
     F2 --> F3[Fase 3<br/>Financeiro]
     F3 --> F4[Fase 4<br/>Comissões e Repasses]
     F4 --> F5[Fase 5<br/>Autoatendimento]
-    F5 --> F6[Fase 6<br/>BI e Mobilidade]
+    F5 --> F6[Fase 6<br/>Inteligência]
+    F6 --> F7[Fase 7<br/>Implantação]
 ```
 
 ## 4. Critérios de aceite (exemplos)

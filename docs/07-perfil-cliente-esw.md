@@ -26,8 +26,9 @@ e o motor de cálculo ([`05`](05-motor-calculo-financeiro.md)).
 > **Implicação de escopo para este cliente:** o valor está em **recebíveis /
 > cobrança / gestão de carteira**, não no funil de vendas nem no mapa. Para a ESW,
 > o MVP deve priorizar **Financeiro (cobrança, boletos, carnê, inadimplência,
-> distrato, quitação)** e **cadastro dos contratos existentes** (migração da
-> carteira), deixando CRM, mapa e portais para depois.
+> distrato, quitação)**, deixando CRM, mapa e portais para depois. A **migração
+> dos contratos existentes** fica para uma das últimas etapas (Fase 7 —
+> Implantação, no [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases)).
 
 ## 2. Respostas consolidadas por tema
 
@@ -64,6 +65,7 @@ Valores a aplicar no nível **Geral** (a operação é uniforme; poucos override
 | Carência de correção | 12 meses | Geral |
 | Periodicidade do reajuste | Anual (aniversário) | Geral |
 | Juros mensais | **Não** (parcela fixa entre reajustes) | Geral |
+| Índice negativo (deflação) | **Conta como zero**; o +1% se mantém | Geral |
 | Multa por atraso | 2% | Geral |
 | Juros de mora | 1% a.m. | Geral |
 | Início de encargos por atraso | 1 dia | Geral |
@@ -84,6 +86,8 @@ Confirmado com o cliente do projeto (substitui a premissa anterior de “1% ao m
 - **Reajuste anual** (a partir do 13º mês): **IGP-M acumulado (12m) + 1%**, com o
   **1% somado** ao índice (**aditivo**), não composto.
 - É, no momento, o **único caso** real.
+- **Índice negativo conta como zero**: em ano de IGP-M acumulado negativo, a
+  parcela **não diminui** — o reajuste fica só no **+1%**.
 
 ```
 Fator anual (aditivo) = 1 + ( IGP-M₁₂ₘ + 1% )   → aplicado ao saldo devedor
@@ -114,16 +118,19 @@ ou corrige a **parcela** na competência?
 - **Valida** o modelo de parametrização: como a ESW é uniforme, quase tudo vive no
   nível **Geral** — a cascata não “atrapalha” operações simples (bom sinal de que
   o design não engessa nem complica).
-- **Escopo/priorização ESW:** priorizar **carteira/cobrança + migração dos ~215
-  contratos**; **mapa, CRM e portais** ficam para fases posteriores.
+- **Escopo/priorização ESW:** priorizar **carteira/cobrança**; **mapa, CRM e
+  portais** ficam para fases posteriores; a **migração dos ~215 contratos** é uma
+  das últimas etapas (Fase 7).
 
 ## 6. Próximos passos sugeridos
 
 1. ~~Confirmar o modelo de juros/correção~~ — **confirmado** (§4).
 2. ~~Base da comissão como parâmetro~~ — **feito**: `comissao.base` no
    [catálogo](08-catalogo-de-parametros.md#210-comissão).
-3. Validar as **pendências de parâmetros** da ESW
+3. ~~Tratamento de IGP-M negativo~~ — **definido**: conta como zero (§4).
+4. Validar as demais **pendências de parâmetros** da ESW
    ([`08` §6](08-catalogo-de-parametros.md#6-pendências-a-validar-esw)) — em
-   especial o tratamento de **IGP-M negativo**.
-4. Planejar a **migração da carteira** existente (importar ~215 contratos com seus
-   saldos, planos e histórico) como parte do MVP para a ESW.
+   especial a base do reajuste (saldo × parcela) e a defasagem do índice.
+5. **Migração da carteira** (~215 contratos com saldos, planos e histórico):
+   **uma das últimas etapas** — Fase 7 (Implantação) do
+   [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases).

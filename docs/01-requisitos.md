@@ -455,7 +455,8 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
    escopo do MVP. *(RF-VEN-005)*
 2. **Financiamento direto (caso real ESW, confirmado)**: **sem juros mensais**;
    **reajuste anual = IGP-M acumulado (12m) + 1% fixo (aditivo)**, a partir do 2º
-   ano (carência de 12 meses). A premissa anterior de “1% ao mês” foi
+   ano (carência de 12 meses); índice negativo conta como zero (o +1% se
+   mantém). A premissa anterior de “1% ao mês” foi
    **descartada**. O modelo é **parametrizado** para também cobrir padrões de
    mercado (Price/SAC com juros mensais, correção mensal, etc.).
    *(RF-FIN-002, RN-031, RN-031a; caso em [`07`](07-perfil-cliente-esw.md))*

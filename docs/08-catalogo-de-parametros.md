@@ -88,7 +88,7 @@ São estáveis — servem de identificador no banco, na API e na auditoria.
 | `reajuste.data_base` | Referência do ciclo de reajuste | enum: aniversário do contrato, 1ª parcela, data fixa | aniversário do contrato | aniversário do contrato | G E C | C | 4.5 |
 | `reajuste.base_aplicacao` | Onde o reajuste incide | enum: saldo devedor, parcela | saldo devedor | a validar (assumido saldo) | G E C | C | 4.7 |
 | `reajuste.defasagem_meses` | Defasagem do índice (ex.: índice do mês anterior) | int (meses) | 1 | a validar | G E C | C | — |
-| `reajuste.indice_negativo` 🔒 | Tratamento de índice acumulado negativo | enum: piso no índice, piso no total, aplicar | piso no total | a validar | G E C | C | — |
+| `reajuste.indice_negativo` 🔒 | Tratamento de índice acumulado negativo | enum: piso no índice, piso no total, aplicar | piso no total | piso no índice (conta como 0) | G E C | C | — |
 
 ### 2.6 Encargos por atraso
 
@@ -219,6 +219,7 @@ própria configuração como preset**.
 | `reajuste.indice` | IGP-M | IGP-M | IPCA | nenhum |
 | `reajuste.acrescimo_fixo` | 1% (aditivo) | 0% | 0% | — |
 | `reajuste.carencia_meses` | 12 | 12 | 0 | — |
+| `reajuste.indice_negativo` | piso no índice | ex.: piso no total | ex.: piso no total | — |
 | `entrada.percentual_min` | 6% | ex.: 10% | ex.: 20% | ex.: 20% |
 | `entrada.parcelas_max` | 4 | 1 | 1 | ex.: 3 |
 | `plano.prazo_max_parcelas` | 120 | ex.: 180 | ex.: 240 | ex.: 24 |
@@ -241,7 +242,7 @@ própria configuração como preset**.
 
    | Política (`reajuste.indice_negativo`) | Reajuste resultante |
    |---------------------------------------|---------------------|
-   | piso no índice (índice conta como 0) | +1% |
+   | piso no índice (índice conta como 0) — **escolha da ESW** | +1% |
    | piso no total (nunca reduz) — *default* | 0% |
    | aplicar | −2% (saldo diminui) |
 
@@ -260,10 +261,10 @@ própria configuração como preset**.
 
 ## 6. Pendências a validar (ESW)
 
-Itens marcados “a validar” acima. Os três primeiros afetam cálculo:
+Itens marcados “a validar” acima. Os itens 2 e 3 afetam cálculo:
 
-1. **`reajuste.indice_negativo`** — *“Se o IGP-M do ano vier negativo, a parcela
-   diminui, fica igual, ou sobe só o 1%?”*
+1. ~~`reajuste.indice_negativo`~~ — **definido**: índice negativo **conta como
+   zero** (piso no índice). Em ano de IGP-M negativo, o reajuste fica só no **+1%**.
 2. **`reajuste.base_aplicacao`** — o reajuste recalcula pelo **saldo devedor** ou
    atualiza a **parcela**?
 3. **`reajuste.defasagem_meses`** — o “IGP-M dos últimos 12 meses” termina em

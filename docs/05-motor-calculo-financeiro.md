@@ -320,7 +320,7 @@ Para cada parcela e cada recálculo, o motor registra a **memória de cálculo**
 | RC-13 | Em **renegociação**, gera-se **novo plano** que substitui o anterior, mantendo o histórico (RN-037). |
 | RC-14 | A diferença de **arredondamento** é alocada na parcela definida (default: última); o plano deve **fechar** com o total. |
 | RC-15 | Cálculos **determinísticos**: mesmas entradas e mesmas versões de parâmetros ⇒ mesmo resultado. |
-| RC-16 | **Índice acumulado negativo** segue `reajuste.indice_negativo`: **piso no índice** (índice conta como 0; o acréscimo fixo ainda se aplica), **piso no total** (o reajuste nunca reduz o saldo — *default*) ou **aplicar** (reduz). Ex.: IGP-M −3% + 1% aditivo ⇒ +1%, 0% ou −2%, respectivamente. |
+| RC-16 | **Índice acumulado negativo** segue `reajuste.indice_negativo`: **piso no índice** (índice conta como 0; o acréscimo fixo ainda se aplica), **piso no total** (o reajuste nunca reduz o saldo — *default*) ou **aplicar** (reduz). Ex.: IGP-M −3% + 1% aditivo ⇒ +1%, 0% ou −2%, respectivamente. Caso ESW: **piso no índice**. |
 
 ## 15. Exemplos numéricos
 
@@ -358,6 +358,9 @@ Meses 1–12: parcela fixa = saldo inicial / nº de parcelas (sem juros, sem rea
 No 13º mês:  fator   = 1 + (4% + 1%) = 1,05
              saldo₁₂⁺ = saldo₁₂ × 1,05
              parcela  = saldo₁₂⁺ / nº de parcelas restantes
+
+Ano com IGP-M acumulado de −3% (índice negativo conta como zero — RC-16):
+             fator   = 1 + (0% + 1%) = 1,01   ⇒ parcela não diminui; sobe só o 1%
 ```
 
 ### 15.4 Encargos de mora
