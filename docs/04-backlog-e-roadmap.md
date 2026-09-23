@@ -96,13 +96,13 @@ template; **plano de pagamento do financiamento próprio com evolução
 parametrizada da dívida (caso ESW: sem juros mensais + reajuste anual IGP-M +
 1% aditivo; configurável p/ Price/SAC), boletos e baixa (manual + CNAB)**;
 inadimplência básica; distrato; comissão com split (à vista e conforme
-recebimento); usuários/RBAC e auditoria; dashboard comercial e espelho
+recebimento); usuários/RBAC, multiempresa (SaaS) e auditoria; dashboard comercial e espelho
 exportável.
 
 *(RF-EMP-001/002/005/006/008/009/010/011, RF-LOT-001..004/006/008/009/010/012,
 RF-MAP-001..006, RF-CRM-001/003/005/007/010, RF-RES-001..003/007,
 RF-VEN-001..003/005..008, RF-CTR-001/002/005/007, RF-FIN-001..005/007/010/012,
-RF-COM-001..004, RF-GED-001, RF-REL-001..003, RF-ADM-001/002/004/005,
+RF-COM-001..004, RF-GED-001, RF-REL-001..003, RF-ADM-001..005,
 RF-PAR-001..003/005/007/012,
 RF-CALC-001..007/009/010/012/013/015/017, RNF-001..004/007..009/011/012)*
 
@@ -111,7 +111,7 @@ Captação automática de leads e distribuição; visitas; assinatura eletrônic
 régua de cobrança; renegociação e antecipação; informe de IR; extrato de
 comissões e regra "conforme recebimento"; contas a pagar/receber, repasses e
 exportação contábil; checklist documental; portal do cliente e do corretor
-(web); multiempresa; relatórios de comissão e repasse; mensageria; validações
+(web); relatórios de comissão e repasse; mensageria; validações
 Receita/CEP; **alteração de parâmetros de contratos vigentes** (individual/em
 massa) com vigência temporal e recálculo (RF-PAR-010, RF-FIN-015); **presets de
 configuração** (caso ESW + modelos de mercado, RF-PAR-011).
@@ -146,6 +146,11 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência** | "Otimizar" | Dashboards avançados/BI, portal do corretor (web), camadas informativas do mapa, conciliação. |
 | **Fase 7 — Implantação** | "Entrar em operação" | **Migração da carteira** existente (contratos, saldos, planos e histórico), conferência de saldos migrados, configuração final dos parâmetros/presets, treinamento e go-live. |
+
+> **Modelo SaaS:** a implantação é feita **por empresa assinante**, assim que o
+> produto cobre a operação dela — não precisa aguardar todas as fases. Para a
+> ESW, a entrada em operação ocorre ao final do núcleo da carteira (cadastros,
+> contratos, gestão financeira e cobrança), com a migração como última etapa.
 
 ```mermaid
 graph LR

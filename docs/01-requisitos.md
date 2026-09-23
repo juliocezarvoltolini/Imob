@@ -338,7 +338,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 |----|-----------|:------:|
 | RF-ADM-001 | Gerir **usuários** (criação, bloqueio, reset de senha) e **autenticação** (senha forte, 2FA opcional). | M |
 | RF-ADM-002 | Definir **perfis e permissões (RBAC)** granulares por módulo/ação e por empreendimento. | M |
-| RF-ADM-003 | Suportar **multiempresa/multifilial** e **multiempreendimento** com segregação de dados. | S |
+| RF-ADM-003 | Suportar **multiempresa/multifilial** e **multiempreendimento** com segregação de dados — base do modelo **SaaS** (cada imobiliária assinante é uma empresa isolada). | M |
 | RF-ADM-004 | Registrar **trilha de auditoria** (quem fez o quê e quando) nas operações sensíveis (preço, status de lote, baixa financeira, distrato). | M |
 | RF-ADM-005 | Parametrizar o sistema: índices de correção, taxas, alçadas, templates, régua de cobrança, tabelas de comissão — seguindo o modelo **hierárquico com herança** (ver módulo `PAR` e seção 3.1). | M |
 | RF-ADM-006 | Gerir **consentimentos e solicitações LGPD** (acesso, correção, exclusão/anonimização de dados). | S |
@@ -439,8 +439,10 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 
 - **Plataforma**: web responsivo como base; app mobile do corretor a decidir
   (nativo, híbrido ou PWA) — ver RF-PCO-005.
-- **Multitenancy**: definir se haverá uma instância por imobiliária ou base
-  compartilhada com segregação lógica (impacta RF-ADM-003).
+- **Multitenancy — decidido: SaaS multiempresa.** A plataforma é um produto
+  próprio, oferecido por assinatura a várias imobiliárias, em base compartilhada
+  com **isolamento de dados por empresa** (RF-ADM-003). Cada empresa tem seu
+  próprio nível **Geral** de parâmetros; os defaults do catálogo são da plataforma.
 - **Provedor de mapas** e **provedor bancário/assinatura**: a selecionar
   (impacta integrações da seção 7).
 - **Motor de cálculo financeiro**: decidir entre construir internamente ou

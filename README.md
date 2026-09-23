@@ -115,6 +115,9 @@ material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.
   coordenadas e **dimensões planas** dos lotes. **Não** haverá interface de
   topógrafo nem tratamento de **complexidade topográfica** (relevo, curvas de
   nível, edição CAD).
+- **Modelo de negócio: SaaS multiempresa.** A plataforma é um produto próprio,
+  oferecido por assinatura (implantação + mensalidade) a várias imobiliárias, com
+  isolamento de dados por empresa. A ESW é a primeira cliente.
 - **Parametrização flexível (arquitetura)**: parâmetros de negócio com
   **herança e sobrescrita** na cadeia `Geral → Empreendimento → Setor → Lote →
   Contrato` (o nível mais específico prevalece), com **congelamento no contrato**

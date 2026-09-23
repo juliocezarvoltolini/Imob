@@ -27,9 +27,9 @@ São estáveis — servem de identificador no banco, na API e na auditoria.
 | Coluna | Significado |
 |--------|-------------|
 | **Valores** | Tipo e domínio: `enum` (uma opção), `lista` (várias), `%`, `% a.m.`, `R$`, `int` (com unidade), `bool`, `tabela` (linhas estruturadas), `ref` (aponta para um cadastro) |
-| **Default** | Valor do sistema quando nenhum nível define o parâmetro. “— (obrigatório)” = sem default; precisa ser configurado (VP-11) |
+| **Default** | Valor da **plataforma** quando nenhum nível define o parâmetro. “— (obrigatório)” = sem default; precisa ser configurado (VP-11) |
 | **ESW** | Valor do caso real. “a validar” = não respondido ou ambíguo no questionário (ver §6) |
-| **Níveis** | Onde pode ser definido: **G** Geral · **E** Empreendimento · **S** Setor/Quadra · **L** Lote · **C** Contrato |
+| **Níveis** | Onde pode ser definido: **G** Geral (da empresa assinante) · **E** Empreendimento · **S** Setor/Quadra · **L** Lote · **C** Contrato |
 | **Contrato** | **C** = congela na venda (snapshot temporal; só muda por revisão governada, RF-PAR-010) · **D** = dinâmico (sempre o valor vigente na cascata) · **P** = regra de proposta (valida/simula; o valor negociado vai ao contrato) · **—** = não se aplica |
 | **Q** | Item do [questionário](06-questionario-configuracao.md) que informa o valor |
 | 🔒 | Parâmetro **sensível**: exige alçada/permissão e gera auditoria (RN-075) |
