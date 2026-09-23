@@ -54,13 +54,15 @@ inadimplência, comissões, repasses).
 | [`docs/05-motor-calculo-financeiro.md`](docs/05-motor-calculo-financeiro.md) | Motor de cálculo financeiro: métodos (Price/SAC/simples), correção com carência, mora, antecipação, recálculo temporal, requisitos (RF-CALC) e exemplos numéricos. |
 | [`docs/06-questionario-configuracao.md`](docs/06-questionario-configuracao.md) | Questionário de descoberta (linguagem acessível) para entender a operação do cliente e configurar os parâmetros; inclui anexo interno de mapeamento. |
 | [`docs/07-perfil-cliente-esw.md`](docs/07-perfil-cliente-esw.md) | Consolidação de um questionário preenchido (caso real ESW): respostas, configuração inicial de parâmetros e refinamentos aos requisitos. |
+| [`docs/08-catalogo-de-parametros.md`](docs/08-catalogo-de-parametros.md) | Catálogo de parâmetros (70): chaves, valores, defaults, valor ESW, níveis da cascata, comportamento no contrato, validações (VP) e presets (ESW + modelos de mercado). |
 
 Convenção de identificadores usada em todo o material:
 
 - **RF-XXX-000** — Requisito Funcional (o `XXX` indica o módulo, ex.: `RF-LOT-010`).
 - **RF-CALC-000** — Requisito do motor de cálculo financeiro.
 - **RNF-000** — Requisito Não-Funcional.
-- **RN-000** — Regra de Negócio; **RC-00** — Regra de cálculo (motor financeiro).
+- **RN-000** — Regra de Negócio; **RC-00** — Regra de cálculo (motor financeiro);
+  **VP-00** — Validação entre parâmetros.
 
 ## 4. Resumo executivo das funcionalidades (módulos)
 

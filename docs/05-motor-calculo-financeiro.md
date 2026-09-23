@@ -48,7 +48,8 @@ recálculos.
 ## 2. Entradas do cálculo
 
 Todas resolvidas via `PAR` (cascata Geral→Empreendimento→Setor→Lote→Contrato) e,
-no contrato, versionadas por vigência:
+no contrato, versionadas por vigência. Chaves, domínios e defaults no
+[catálogo de parâmetros](08-catalogo-de-parametros.md) (ex.: `juros.*`, `reajuste.*`, `mora.*`):
 
 | Entrada | Exemplo | Observação |
 |---------|---------|-----------|
@@ -319,6 +320,7 @@ Para cada parcela e cada recálculo, o motor registra a **memória de cálculo**
 | RC-13 | Em **renegociação**, gera-se **novo plano** que substitui o anterior, mantendo o histórico (RN-037). |
 | RC-14 | A diferença de **arredondamento** é alocada na parcela definida (default: última); o plano deve **fechar** com o total. |
 | RC-15 | Cálculos **determinísticos**: mesmas entradas e mesmas versões de parâmetros ⇒ mesmo resultado. |
+| RC-16 | **Índice acumulado negativo** segue `reajuste.indice_negativo`: **piso no índice** (índice conta como 0; o acréscimo fixo ainda se aplica), **piso no total** (o reajuste nunca reduz o saldo — *default*) ou **aplicar** (reduz). Ex.: IGP-M −3% + 1% aditivo ⇒ +1%, 0% ou −2%, respectivamente. |
 
 ## 15. Exemplos numéricos
 

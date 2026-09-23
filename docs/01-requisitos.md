@@ -10,7 +10,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 - [6. Requisitos de conformidade legal e regulatória](#6-requisitos-de-conformidade-legal-e-regulatória)
 - [7. Integrações externas](#7-integrações-externas)
 - [8. Restrições e decisões de arquitetura em aberto](#8-restrições-e-decisões-de-arquitetura-em-aberto)
-- [9. Premissas e questões em aberto](#9-premissas-e-questões-em-aberto)
+- [9. Premissas e decisões](#9-premissas-e-decisões)
 
 ---
 
@@ -371,7 +371,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 
 | ID | Requisito | Prior. |
 |----|-----------|:------:|
-| RF-PAR-001 | Manter um **catálogo de parâmetros** de negócio, cada um com chave, tipo de dado, **níveis aplicáveis**, valor **default** e descrição. | M |
+| RF-PAR-001 | Manter um **catálogo de parâmetros** de negócio, cada um com chave, tipo de dado, **níveis aplicáveis**, valor **default** e descrição. Catálogo inicial (70 parâmetros) em [`08`](08-catalogo-de-parametros.md). | M |
 | RF-PAR-002 | Definir/editar valores de parâmetros em cada nível da cadeia (**Geral, Empreendimento, Setor/Quadra, Lote, Contrato**), respeitando os níveis aplicáveis de cada parâmetro. | M |
 | RF-PAR-003 | **Resolver o valor efetivo** de um parâmetro para um alvo (lote/contrato), aplicando **herança e sobrescrita** (o mais específico vence; default como último recurso). | M |
 | RF-PAR-004 | Exibir, para cada valor, a **origem** (definido neste nível / herdado de X / sobrescrito) e permitir **pré-visualizar o valor efetivo** de um lote/contrato. | S |
@@ -381,6 +381,8 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-PAR-008 | Suportar **extensibilidade**: incluir novos parâmetros (e, idealmente, novos níveis) sem alteração estrutural do sistema. | C |
 | RF-PAR-009 | Ao alterar um parâmetro em um nível, **sinalizar o impacto** (quantos itens subordinados sem override serão afetados). | C |
 | RF-PAR-010 | **Alterar parâmetros de contratos vigentes** — individual ou **em massa** — com seleção de escopo de contratos (contrato, empreendimento, filtro, todos), **data de vigência**, **abrangência do recálculo** selecionável (parcelas **em aberto**, **a gerar** e/ou **já pagas** — estas apurando o que o cliente pagou a mais, com **crédito/estorno**), **justificativa** e **alçada/aprovação**, com **auditoria**; opcionalmente gerar **aditivo** e **recalcular** o plano. Operação **reversível**. | S |
+| RF-PAR-011 | Oferecer **presets** de configuração (ex.: caso ESW, Price + IGP-M, SAC + IPCA, sem juros) aplicáveis ao nível Geral ou Empreendimento como **cópia inicial** (sem vínculo), e permitir **salvar a configuração atual como preset**. | S |
+| RF-PAR-012 | **Validar a consistência entre parâmetros** ao salvar — dependências, faixas, somas e tetos legais ([`08` §3](08-catalogo-de-parametros.md#3-validações-entre-parâmetros)) —, bloqueando configurações inválidas e alertando as que ficariam sem efeito. | M |
 
 ## 5. Requisitos não-funcionais
 

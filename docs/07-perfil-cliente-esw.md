@@ -119,7 +119,11 @@ ou corrige a **parcela** na competência?
 
 ## 6. Próximos passos sugeridos
 
-1. Confirmar o **modelo de juros/correção** (§4) — é o item que mais afeta o motor.
-2. Definir **base da comissão** como parâmetro (venda × entrada).
-3. Planejar a **migração da carteira** existente (importar ~215 contratos com seus
+1. ~~Confirmar o modelo de juros/correção~~ — **confirmado** (§4).
+2. ~~Base da comissão como parâmetro~~ — **feito**: `comissao.base` no
+   [catálogo](08-catalogo-de-parametros.md#210-comissão).
+3. Validar as **pendências de parâmetros** da ESW
+   ([`08` §6](08-catalogo-de-parametros.md#6-pendências-a-validar-esw)) — em
+   especial o tratamento de **IGP-M negativo**.
+4. Planejar a **migração da carteira** existente (importar ~215 contratos com seus
    saldos, planos e histórico) como parte do MVP para a ESW.

@@ -190,7 +190,8 @@ e regras RN-070 a RN-075).
 
 | Entidade | Descrição | Atributos-chave |
 |----------|-----------|-----------------|
-| **Parâmetro** | Definição de um parâmetro de negócio (metadado). | chave, nome, tipo de dado, **níveis aplicáveis**, valor **default**, **sensível** (sim/não), descrição |
+| **Parâmetro** | Definição de um parâmetro de negócio (metadado) — ver [catálogo](08-catalogo-de-parametros.md). | chave, nome, tipo e domínio de valores, **níveis aplicáveis**, valor **default** (ou obrigatório), **sensível**, **comportamento no contrato** (congela / dinâmico / proposta / —), validações, descrição |
+| **Preset de configuração** | Conjunto nomeado de valores de parâmetros usado como ponto de partida (RN-078). | nome, descrição, valores (parâmetro → valor), origem (sistema / imobiliária) |
 | **Valor de Parâmetro** | Valor atribuído a um parâmetro em um nível específico. | parâmetro, **nível** (Geral/Empreendimento/Setor/Lote/Contrato), **referência do nível** (id do empreendimento/setor/lote/contrato), valor, autor, data |
 | **Parâmetro do Contrato (temporal)** | Valores efetivos persistidos no contrato, **versionados por vigência**. A versão inicial é o *snapshot* da venda; alterações governadas criam **novas versões**. | contrato, parâmetro, valor, **vigência** (início/fim), versão, **origem** (snapshot / alteração em massa / aditivo), autor, data |
 | **Revisão de Parâmetro (alteração em contratos)** | Registra uma alteração **deliberada** de parâmetro(s) em contratos vigentes (individual/massa) e liga-se às novas versões geradas. | escopo (contratos-alvo), parâmetro, novo valor, vigência, **abrangência do recálculo** (em aberto / a gerar / pagas), justificativa, aprovação/alçada, autor, data, reversão |
