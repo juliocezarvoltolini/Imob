@@ -295,6 +295,27 @@ Observações: ____________________________________________
 
 ---
 
+## 15. Notas fiscais
+
+A partir de dezembro de 2026 (ou janeiro de 2027, no Simples Nacional), a venda de
+imóveis passa a exigir uma nota fiscal eletrônica própria, a NF-e ABI. Estas
+perguntas ajudam a preparar essa emissão.
+
+**15.1** Qual é o regime tributário da empresa?
+`[ ]` Simples Nacional  `[ ]` Lucro Presumido  `[ ]` Lucro Real  `[ ]` Não sei
+
+**15.2** Hoje vocês emitem nota fiscal na venda de lotes?
+`[ ]` Não  `[ ]` Sim — quem emite? `[ ]` Contabilidade  `[ ]` Sistema próprio  `[ ]` Outro: ______
+
+**15.3** A empresa tem certificado digital (e-CNPJ)?
+`[ ]` Sim, tipo A1 (arquivo)  `[ ]` Sim, tipo A3 (cartão/token)  `[ ]` Não  `[ ]` Não sei
+
+**15.4** Contato da contabilidade responsável: ______________________________
+
+Observações: ____________________________________________
+
+---
+
 ## Espaço livre
 
 Conte qualquer detalhe da sua operação que ache importante e que não foi
@@ -331,6 +352,7 @@ questionário em configuração.
 | 12. Contratos | Modelos, assinatura eletrônica, modelo jurídico | RF-CTR-001..003, RF-EMP-011 |
 | 13. Ferramentas | Integração ERP/contábil, captação de leads | RF-FCX-005, RF-INT-007/008, RF-CRM-002 |
 | 14. Acesso online | Prioridade dos portais do cliente e do corretor | RF-PCL-*, RF-PCO-* |
+| 15. Notas fiscais | Regime tributário (data de início da NF-e ABI), certificado digital, contato contábil | RF-FIS-*, RN-080..086, `fiscal.*` |
 
 > Dica de uso: respostas na **Seção 10** indicam em quais **níveis** cada
 > parâmetro precisa poder ser definido (geral, empreendimento, setor, lote,

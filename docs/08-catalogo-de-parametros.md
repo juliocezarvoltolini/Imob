@@ -179,7 +179,22 @@ São estáveis — servem de identificador no banco, na API e na auditoria.
 | `contrato.modelo_documento` | Modelo (template) do contrato | ref (cadastro de modelos) | padrão do sistema | 1 modelo | G E | — | 12.1 |
 | `contrato.assinatura` | Forma de assinatura | enum: papel, eletrônica, ambas | ambas | ambas | G E | — | 12.2 |
 
-**Total: 70 parâmetros** em 14 domínios.
+### 2.15 Fiscal (NF-e ABI, modelo 77)
+
+| Chave | O que define | Valores | Default | ESW | Níveis | Contrato | Q |
+|-------|--------------|---------|---------|-----|--------|:--------:|---|
+| `fiscal.nf_abi.habilitada` | Emite a NF-e ABI nas vendas | bool | não | sim | G | — | 15.2 |
+| `fiscal.regime_tributario` | Regime da empresa (define a data de início) | enum: regime regular IBS/CBS, Simples Nacional | — (obrigatório se habilitada) | a validar | G | — | 15.1 |
+| `fiscal.nf_abi.inicio_obrigatoriedade` | Data a partir da qual a emissão é exigida | data | conforme o regime (01/12/2026 ou 01/01/2027) | a validar | G | — | 15.1 |
+| `fiscal.ambiente` | Ambiente de emissão | enum: homologação, produção | homologação | homologação até a entrada em operação | G | — | — |
+| `fiscal.serie` | Série das notas | int | 1 | 1 | G | — | — |
+| `fiscal.eventos_pagamento` | Como os eventos de pagamento são gerados | enum: automático na baixa, manual | automático na baixa | automático na baixa | G E | D | — |
+| `fiscal.lote_em_loteamento` 🔒 | Lote ainda em fase de loteamento (nota sem destaque de IBS/CBS) | bool | não | a validar | E L | C | — |
+| `fiscal.ibs_cbs.regras` 🔒 | Alíquotas, reduções e redutores do regime de bens imóveis | tabela | conforme a legislação (mantida pela plataforma) | a validar com a contabilidade | G E | C | — |
+| `fiscal.envio_comprador` | Envio do XML/PDF ao comprador | lista: e-mail, portal do cliente | e-mail | e-mail | G | D | — |
+| `fiscal.certificado` | Certificado digital da empresa | ref (certificado A1) | — | a fornecer | G | — | 15.3 |
+
+**Total: 80 parâmetros** em 15 domínios.
 
 ## 3. Validações entre parâmetros
 
@@ -200,6 +215,7 @@ Verificadas ao salvar (RF-PAR-012). **Bloqueiam** configurações inválidas e
 | VP-10 | `quitacao.desconto_percentual` acima de `quitacao.desconto_max_sem_aprovacao` exige aprovação (alçada). |
 | VP-11 | Parâmetros **sem default** (`distrato.retencao`, `comissao.percentual`, `contrato.modelo_juridico`) precisam estar definidos antes da **primeira venda** do empreendimento. |
 | VP-12 | Um parâmetro só pode ser definido nos seus **níveis aplicáveis** (RN-072). |
+| VP-13 | Com `fiscal.nf_abi.habilitada` = sim, a primeira emissão exige `fiscal.regime_tributario`, certificado digital válido e os dados fiscais do imóvel (CIB/matrícula) de cada lote vendido. |
 
 ## 4. Presets (modelos de configuração)
 
@@ -277,3 +293,7 @@ Itens marcados “a validar” acima. Os itens 2 e 3 afetam cálculo:
 7. **Quitação**: quem aprova desconto acima de 5%.
 8. Menos críticos para a ESW (operação de carteira): alçadas de desconto, dia de
    vencimento, 1º vencimento e reserva.
+9. **Fiscal (NF-e ABI)**: regime tributário da ESW (define 01/12/2026 ou
+   01/01/2027); certificado digital; CIB/matrícula dos lotes e como identificar a
+   fração ideal na nota; tratamento das parcelas dos contratos anteriores à
+   obrigatoriedade — a definir com a contabilidade.

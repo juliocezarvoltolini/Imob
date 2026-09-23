@@ -16,6 +16,7 @@ configuráveis e os valores abaixo são exemplos.
 - [Repasses ao loteador](#repasses-ao-loteador)
 - [Geográficas](#geográficas)
 - [Segurança e auditoria](#segurança-e-auditoria)
+- [Documentos fiscais (NF-e ABI)](#documentos-fiscais-nf-e-abi)
 
 ---
 
@@ -130,3 +131,15 @@ adaptável a cada empreendimento e a cada empresa usuária (ver seção 3.1 de
 | RN-060 | Operações sensíveis (alteração de preço, mudança de status de lote, baixa/estorno financeiro, distrato, aprovação de desconto) geram **registro de auditoria** imutável com autor, data/hora e valores antes/depois. |
 | RN-061 | O acesso a dados e ações é restrito pelo **perfil (RBAC)** e pelos **empreendimentos** autorizados ao usuário. |
 | RN-062 | Dados pessoais seguem a **LGPD**: consentimento registrado, e atendimento a pedidos de acesso/correção/exclusão-anonimização. |
+
+## Documentos fiscais (NF-e ABI)
+
+| ID | Regra |
+|----|-------|
+| RN-080 | A **NF-e ABI (modelo 77)** é emitida **uma única vez**, na **alienação** (efetivação da venda, permuta ou dação); **não** se emite nova nota por parcela. |
+| RN-081 | Em loteamento, o IBS/CBS é devido a **cada pagamento**, com redutores proporcionais: cada parcela recebida gera um **evento de pagamento** vinculado à nota, separando valor original e acréscimos, conforme o leiaute vigente. |
+| RN-082 | A venda de **lote em fase de loteamento** é documentada **sem destaque** de IBS/CBS, conforme o indicador previsto no leiaute. |
+| RN-083 | O **distrato** de uma venda com nota autorizada exige o tratamento fiscal correspondente (evento de cancelamento dentro das regras do leiaute ou o procedimento previsto) — a validar com a contabilidade. |
+| RN-084 | A emissão é obrigatória a partir de **01/12/2026** (regime regular de IBS/CBS) ou **01/01/2027** (Simples Nacional e pessoas físicas contribuintes); a data vale **por empresa assinante**, conforme o seu regime. |
+| RN-085 | Nenhuma nota ou evento é transmitido sem **certificado digital válido** e sem os **dados fiscais do imóvel**; rejeições são exibidas com a causa e a ação corretiva. |
+| RN-086 | O tratamento das parcelas de **contratos assinados antes da obrigatoriedade** (se geram eventos) segue a orientação da contabilidade e o leiaute vigente — parametrizável por empresa. |

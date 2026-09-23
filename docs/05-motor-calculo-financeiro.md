@@ -276,7 +276,10 @@ Para cada parcela e cada recálculo, o motor registra a **memória de cálculo**
 - saldo inicial do período, juros, amortização, correção aplicada (índice e
   fator), encargos de atraso, deságios, saldo final;
 - parâmetros e **versões** (vigência) usados;
-- data/hora, evento e responsável (quando manual).
+- data/hora, evento e responsável (quando manual);
+- a separação entre **valor original** e **acréscimos** (juros, multa, reajuste)
+  de cada pagamento, que também alimenta os **eventos de pagamento da NF-e ABI**
+  (RF-FIS-003).
 
 ## 13. Requisitos funcionais (RF-CALC)
 

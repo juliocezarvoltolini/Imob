@@ -54,7 +54,7 @@ inadimplência, comissões, repasses).
 | [`docs/05-motor-calculo-financeiro.md`](docs/05-motor-calculo-financeiro.md) | Motor de cálculo financeiro: métodos (Price/SAC/simples), correção com carência, mora, antecipação, recálculo temporal, requisitos (RF-CALC) e exemplos numéricos. |
 | [`docs/06-questionario-configuracao.md`](docs/06-questionario-configuracao.md) | Questionário de descoberta (linguagem acessível) para entender a operação do cliente e configurar os parâmetros; inclui anexo interno de mapeamento. |
 | [`docs/07-perfil-cliente-esw.md`](docs/07-perfil-cliente-esw.md) | Consolidação de um questionário preenchido (caso real ESW): respostas, configuração inicial de parâmetros e refinamentos aos requisitos. |
-| [`docs/08-catalogo-de-parametros.md`](docs/08-catalogo-de-parametros.md) | Catálogo de parâmetros (70): chaves, valores, defaults, valor ESW, níveis da cascata, comportamento no contrato, validações (VP) e presets (ESW + modelos de mercado). |
+| [`docs/08-catalogo-de-parametros.md`](docs/08-catalogo-de-parametros.md) | Catálogo de parâmetros (80): chaves, valores, defaults, valor ESW, níveis da cascata, comportamento no contrato, validações (VP) e presets (ESW + modelos de mercado). |
 
 Convenção de identificadores usada em todo o material:
 
@@ -83,7 +83,8 @@ Convenção de identificadores usada em todo o material:
 | 13 | **Administração e Segurança** | Usuários, perfis/permissões (RBAC), multiempresa, auditoria e parâmetros. |
 | 14 | **Portal do Cliente** | Autoatendimento do comprador (boletos, extrato, contratos, informe de IR). |
 | 15 | **Portal do Corretor** | Estoque, reservas, propostas, comissões e materiais de venda. |
-| 16 | **Integrações** | Bancos, assinatura eletrônica, mapas, Receita/CEP, mensageria e contabilidade. |
+| 16 | **Integrações** | Bancos, assinatura eletrônica, mapas, Receita/CEP, mensageria, contabilidade e ambiente fiscal. |
+| 17 | **Fiscal — NF-e ABI (modelo 77)** | Nota de alienação de imóveis emitida na venda, eventos de pagamento das parcelas e cancelamento, com IBS/CBS. |
 
 > **Mecanismo transversal — Parametrização hierárquica.** Para o sistema não ser
 > engessado, um mecanismo de parâmetros com **herança e sobrescrita**
@@ -115,6 +116,9 @@ material (detalhes na seção 9 de [`docs/01-requisitos.md`](docs/01-requisitos.
   coordenadas e **dimensões planas** dos lotes. **Não** haverá interface de
   topógrafo nem tratamento de **complexidade topográfica** (relevo, curvas de
   nível, edição CAD).
+- **Documentos fiscais:** o sistema emite a **NF-e ABI (modelo 77)**, obrigatória a
+  partir de 01/12/2026 (regime regular de IBS/CBS) ou 01/01/2027 (Simples
+  Nacional).
 - **Modelo de negócio: SaaS multiempresa.** A plataforma é um produto próprio,
   oferecido por assinatura (implantação + mensalidade) a várias imobiliárias, com
   isolamento de dados por empresa. A ESW é a primeira cliente.

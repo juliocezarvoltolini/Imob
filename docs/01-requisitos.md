@@ -35,6 +35,9 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 - **Comissionamento** de corretores e parceiros (à vista e conforme recebimento).
 - **Portais web** de autoatendimento (cliente e corretor).
 - **Relatórios e indicadores** gerenciais.
+- **Documentos fiscais**: emissão da **NF-e ABI (modelo 77)** na alienação dos
+  lotes, com os eventos vinculados (pagamentos das parcelas, cancelamento),
+  conforme o leiaute nacional.
 
 ### 1.2 Fora do escopo (nesta versão)
 
@@ -45,7 +48,9 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 - Sistema de **execução de obras/engenharia** do loteamento (cronograma físico
   detalhado, diário de obra) — apenas o acompanhamento macro de fases é previsto.
 - **Contabilidade fiscal completa** (SPED, apuração de tributos) — prevê-se
-  **integração** com ERP/contábil, não a substituição dele.
+  **integração** com ERP/contábil, não a substituição dele. A **emissão da NF-e
+  ABI** está no escopo (módulo `FIS`); apuração, recolhimento e escrituração
+  seguem com a contabilidade.
 - **Cartório eletrônico** — prevê-se controle do processo de registro, não a
   execução do registro em si.
 - Marketplace/portal público de anúncios — prevê-se **integração** com portais,
@@ -87,6 +92,7 @@ Sistema de Gestão de Empreendimentos Imobiliários Rurais.
 ┌───────────────────────────────┐          ┌───────────────────────────────┐
 │ FINANCEIRO (recebíveis,        │          │ COMISSÕES                      │
 │ boletos, cobrança, distrato)   │          │ (cálculo, split, pagamento)    │
+│ + notas fiscais (NF-e ABI)     │          │                                │
 └───────────────────────────────┘          └───────────────────────────────┘
         │                                              │
         ▼                                              ▼
@@ -111,7 +117,7 @@ parâmetros** de negócio são resolvidos por uma **cadeia hierárquica com hera
 e sobrescrita**:
 
 ```
-Geral (sistema)  →  Empreendimento  →  Setor/Quadra  →  Lote  →  Contrato
+Geral (empresa)  →  Empreendimento  →  Setor/Quadra  →  Lote  →  Contrato
    (menos específico)  ───────────────────────────────►   (mais específico)
 ```
 
@@ -196,6 +202,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-LOT-012 | Manter **histórico** de cada lote (mudanças de preço, status, reservas, vendas, distratos). | M |
 | RF-LOT-013 | Detectar **inconsistências geométricas** (sobreposição entre lotes, vértices duplicados, polígono não fechado) na importação/edição. | C |
 | RF-LOT-014 | Suportar **remembramento/desmembramento** de lotes (unir ou dividir), preservando rastreabilidade. | C |
+| RF-LOT-015 | Registrar os **dados fiscais do imóvel** exigidos pela NF-e ABI: **CIB** (Cadastro Imobiliário Brasileiro), cartório, matrícula ou transcrição, área e endereço; em condomínio, a **fração ideal**. | M |
 
 ### 4.3 Módulo Mapa Interativo / Espelho de Vendas (`MAP`)
 
@@ -371,7 +378,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 
 | ID | Requisito | Prior. |
 |----|-----------|:------:|
-| RF-PAR-001 | Manter um **catálogo de parâmetros** de negócio, cada um com chave, tipo de dado, **níveis aplicáveis**, valor **default** e descrição. Catálogo inicial (70 parâmetros) em [`08`](08-catalogo-de-parametros.md). | M |
+| RF-PAR-001 | Manter um **catálogo de parâmetros** de negócio, cada um com chave, tipo de dado, **níveis aplicáveis**, valor **default** e descrição. Catálogo inicial (80 parâmetros) em [`08`](08-catalogo-de-parametros.md). | M |
 | RF-PAR-002 | Definir/editar valores de parâmetros em cada nível da cadeia (**Geral, Empreendimento, Setor/Quadra, Lote, Contrato**), respeitando os níveis aplicáveis de cada parâmetro. | M |
 | RF-PAR-003 | **Resolver o valor efetivo** de um parâmetro para um alvo (lote/contrato), aplicando **herança e sobrescrita** (o mais específico vence; default como último recurso). | M |
 | RF-PAR-004 | Exibir, para cada valor, a **origem** (definido neste nível / herdado de X / sobrescrito) e permitir **pré-visualizar o valor efetivo** de um lote/contrato. | S |
@@ -383,6 +390,30 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-PAR-010 | **Alterar parâmetros de contratos vigentes** — individual ou **em massa** — com seleção de escopo de contratos (contrato, empreendimento, filtro, todos), **data de vigência**, **abrangência do recálculo** selecionável (parcelas **em aberto**, **a gerar** e/ou **já pagas** — estas apurando o que o cliente pagou a mais, com **crédito/estorno**), **justificativa** e **alçada/aprovação**, com **auditoria**; opcionalmente gerar **aditivo** e **recalcular** o plano. Operação **reversível**. | S |
 | RF-PAR-011 | Oferecer **presets** de configuração (ex.: caso ESW, Price + IGP-M, SAC + IPCA, sem juros) aplicáveis ao nível Geral ou Empreendimento como **cópia inicial** (sem vínculo), e permitir **salvar a configuração atual como preset**. | S |
 | RF-PAR-012 | **Validar a consistência entre parâmetros** ao salvar — dependências, faixas, somas e tetos legais ([`08` §3](08-catalogo-de-parametros.md#3-validações-entre-parâmetros)) —, bloqueando configurações inválidas e alertando as que ficariam sem efeito. | M |
+
+### 4.17 Módulo Fiscal — NF-e ABI, modelo 77 (`FIS`)
+
+> Documento fiscal eletrônico nacional da **alienação de imóveis** (venda, permuta,
+> dação), criado na reforma tributária (LC 214/2025). **Obrigatório a partir de
+> 01/12/2026** para contribuintes do regime regular de IBS/CBS e de **01/01/2027**
+> para o Simples Nacional e pessoas físicas contribuintes. Leiaute e validações no
+> Manual de Orientação do Contribuinte (MOC), no
+> [portal da NF-e ABI](https://dfe-portal.svrs.rs.gov.br/Nfabi) — a implementação
+> segue a versão vigente. Em loteamento, a nota é emitida **uma única vez, na venda**;
+> cada parcela recebida é informada como **evento de pagamento** vinculado a ela.
+
+| ID | Requisito | Prior. |
+|----|-----------|:------:|
+| RF-FIS-001 | **Emitir a NF-e ABI** uma única vez, na **alienação** do lote/fração (venda, permuta ou dação), a partir dos dados da venda e do contrato: emitente, adquirente(s) — inclusive coproprietários —, imóvel, valores, IBS/CBS e redutores. | M |
+| RF-FIS-002 | Gerar o **XML** conforme o leiaute vigente, **assinar digitalmente** (certificado ICP-Brasil), **transmitir** para autorização e registrar protocolo, número, série e chave de acesso. | M |
+| RF-FIS-003 | Registrar os **eventos de pagamento** vinculados à nota a cada parcela recebida (a partir da baixa financeira), separando **valor original** e **acréscimos** (juros, multa, correção), conforme o leiaute vigente. | M |
+| RF-FIS-004 | Registrar o **evento de cancelamento** dentro das regras do leiaute, vinculado ao distrato ou à correção que o motivou. | M |
+| RF-FIS-005 | Calcular e informar o **IBS e a CBS** do regime específico de bens imóveis (alíquotas, reduções, redutor de ajuste e redutor social, proporcionalidade por pagamento), com **parâmetros configuráveis** validados pela contabilidade; tratar o indicador de **lote em fase de loteamento** (nota sem destaque de IBS/CBS). | M |
+| RF-FIS-006 | Gerenciar o **certificado digital** (A1): cadastro seguro, validade e alerta de vencimento. | M |
+| RF-FIS-007 | Operar em ambiente de **homologação** e de **produção**; tratar **rejeições** com a causa e a ação corretiva, permitindo reenvio. | M |
+| RF-FIS-008 | **Guardar** os XML autorizados e os eventos pelo prazo legal; gerar o **documento auxiliar (PDF)**; enviar XML/PDF ao comprador (e-mail e portal do cliente). | M |
+| RF-FIS-009 | **Painel fiscal**: notas e eventos emitidos, pendentes, rejeitados e cancelados; exportação para a contabilidade. | S |
+| RF-FIS-010 | Acompanhar as **novas versões do leiaute** (MOC, notas técnicas) como parte da evolução contínua do produto. | M |
 
 ## 5. Requisitos não-funcionais
 
@@ -405,6 +436,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RNF-015 | **Acessibilidade** | Boas práticas de acessibilidade (contraste, navegação por teclado) nos portais públicos. |
 | RNF-016 | **Observabilidade** | Monitoramento, métricas e alertas (erros, filas de integração, jobs de cobrança). |
 | RNF-017 | **Compatibilidade** | Suporte aos navegadores modernos mais usados; portais leves para conexões móveis. |
+| RNF-018 | **Conformidade fiscal** | XML e eventos fiscais guardados pelo prazo legal, íntegros e recuperáveis; certificado digital armazenado com criptografia; atualização do leiaute sem interromper a operação. |
 
 ## 6. Requisitos de conformidade legal e regulatória
 
@@ -417,7 +449,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-LEG-001 | **Parcelamento do solo** | Registrar aprovação/registro do parcelamento no órgão competente e no cartório; refletir a modelagem escolhida (loteamento/desmembramento com matrícula individual x condomínio por fração ideal). |
 | RF-LEG-002 | **INCRA / Imóvel rural** | Guardar CCIR, código do imóvel rural e informações de georreferenciamento/certificação, quando aplicável. |
 | RF-LEG-003 | **Ambiental** | CAR, Reserva Legal e APP como camadas/atributos e como restrições de comercialização de áreas não edificáveis. |
-| RF-LEG-004 | **Tributação** | Suporte a emissão/registro de tributos aplicáveis (ex.: ITR do imóvel; ISS sobre comissões/serviços; ITBI no momento oportuno), preferencialmente via integração contábil. |
+| RF-LEG-004 | **Tributação** | Emissão da **NF-e ABI (modelo 77)** e cálculo do **IBS/CBS** no regime específico de bens imóveis (módulo `FIS`); demais tributos (ex.: ITR, ISS sobre serviços, ITBI) e a apuração seguem via contabilidade/integração. |
 | RF-LEG-005 | **Contratos e consumidor** | Cláusulas obrigatórias, regras de distrato e retenção conforme legislação vigente. |
 | RF-LEG-006 | **LGPD** | Tratamento, consentimento, retenção e direitos do titular (ver RNF-008 e RF-ADM-006). |
 
@@ -434,6 +466,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 | RF-INT-007 | **ERP / Contabilidade** | Exportação de lançamentos financeiros e fiscais. |
 | RF-INT-008 | **Portais imobiliários / captação** | Recepção de leads de portais, site e landing pages. |
 | RF-INT-009 | **BI externo** | Exposição de dados para ferramentas de BI (opcional). |
+| RF-INT-010 | **Ambiente autorizador da NF-e ABI** | Autorização de notas e eventos pelos webservices do leiaute nacional, com certificado digital ICP-Brasil. |
 
 ## 8. Restrições e decisões de arquitetura em aberto
 
@@ -473,6 +506,9 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
    coordenadas (vértices) e **dimensões planas** dos lotes, **sem** interface de
    topógrafo e **sem** tratamento de complexidade topográfica (relevo, curvas de
    nível, edição CAD/DWG). *(seção 1.2; RF-LOT-007/010)*
+7. **Documentos fiscais**: o sistema **emite a NF-e ABI (modelo 77)**, obrigatória a
+   partir de 01/12/2026 (regime regular de IBS/CBS) ou 01/01/2027 (Simples
+   Nacional). *(módulo `FIS`, §4.17)*
 
 ### 9.2 Premissas adotadas
 
@@ -508,3 +544,7 @@ auditoria. Os requisitos correspondentes estão no módulo **`PAR`** (seção 4.
 8. **Origem dos dados geográficos**: em qual formato os lotes chegarão
    (KML/KMZ, GeoJSON, planilha) e em qual sistema de coordenadas/datum
    (ex.: SIRGAS 2000, UTM)?
+9. **Fiscal (NF-e ABI)**: regime tributário de cada empresa (define a data de
+   início); tratamento das parcelas de **contratos assinados antes da
+   obrigatoriedade** (se geram eventos); identificação do imóvel na venda de
+   **fração ideal** (CIB/matrícula).

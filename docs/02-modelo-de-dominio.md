@@ -50,6 +50,10 @@ erDiagram
     EMPREENDIMENTO ||--o{ REPASSE : "gera p/ loteador"
     LOTEADOR ||--o{ REPASSE : recebe
 
+    VENDA ||--o| NOTA_FISCAL_ABI : "documentada por"
+    NOTA_FISCAL_ABI ||--o{ EVENTO_FISCAL : registra
+    RECEBIMENTO ||--o| EVENTO_FISCAL : "informado em"
+
     CLIENTE ||--o{ DOCUMENTO : anexa
     VENDA ||--o{ DOCUMENTO : anexa
     EMPREENDIMENTO ||--o{ DOCUMENTO : anexa
@@ -68,7 +72,7 @@ erDiagram
 | **Empreendimento** | Loteamento/condomínio rural gerido pela imobiliária. | nome, tipo, **modelo jurídico** (loteamento c/ matrícula individual x condomínio por fração ideal), município/UF, área total, matrícula-mãe, cartório, CCIR, CAR, situação, perímetro (polígono), datum |
 | **Fase / Etapa** | Recorte de lançamento do empreendimento. | nome, ordem, situação, % infraestrutura |
 | **Quadra / Setor** | Agrupamento de lotes. | identificação, empreendimento |
-| **Lote** | Unidade comercializável. | nº, quadra/fase, tipo/uso, **área**, **perímetro**, **dimensões** (frente/fundos/laterais), características (topografia, esquina), matrícula individual, **status**, preço base, valor/m² |
+| **Lote** | Unidade comercializável. | nº, quadra/fase, tipo/uso, **área**, **perímetro**, **dimensões** (frente/fundos/laterais), características (topografia, esquina), matrícula individual, **dados fiscais** (CIB, cartório, fração ideal em condomínio), **status**, preço base, valor/m² |
 | **Vértice** | Ponto do polígono do lote. | ordem, coordenada (lat/long ou E/N), datum |
 | **Tabela de Preço** | Preços vigentes por empreendimento/período. | vigência, valores, fatores de valorização |
 
@@ -103,6 +107,14 @@ erDiagram
 | **Recebimento** | Baixa de pagamento. | parcela, valor, data, forma, origem (manual/CNAB/PIX) |
 | **Comissão** | Valor devido a corretor/parceiro por venda. | venda, beneficiário, base, %, valor, regra de pagamento, status |
 | **Repasse** | Valor devido ao loteador/proprietário. | empreendimento/venda, base, valor, status |
+
+### Núcleo fiscal
+
+| Entidade | Descrição | Atributos-chave |
+|----------|-----------|-----------------|
+| **Nota Fiscal ABI** | NF-e de Alienação de Bens Imóveis (modelo 77), emitida uma vez na venda. | venda/contrato, número, série, chave de acesso, protocolo, status (autorizada/rejeitada/cancelada), XML, PDF, valores e IBS/CBS |
+| **Evento fiscal** | Ocorrência registrada sobre uma nota autorizada. | nota, tipo (pagamento de parcela / cancelamento), recebimento vinculado, valor original e acréscimos, protocolo, status |
+| **Certificado digital** | Certificado ICP-Brasil (A1) da empresa emitente. | empresa, validade, arquivo protegido |
 
 ### Suporte
 
@@ -178,6 +190,10 @@ Termos do setor imobiliário rural e do domínio do sistema.
 | **Repasse** | Valor transferido ao loteador/proprietário conforme contrato. |
 | **RBAC** | Controle de acesso baseado em papéis (perfis e permissões). |
 | **GED** | Gestão Eletrônica de Documentos. |
+| **NF-e ABI (modelo 77)** | Nota Fiscal Eletrônica de Alienação de Bens Imóveis, criada na reforma tributária; emitida pelo vendedor na alienação do imóvel. |
+| **CIB** | Cadastro Imobiliário Brasileiro — identificação nacional do imóvel usada na NF-e ABI. |
+| **IBS / CBS** | Tributos sobre consumo da reforma tributária (estadual/municipal e federal), com regime específico para bens imóveis. |
+| **Evento de pagamento** | Registro, vinculado à NF-e ABI, de cada parcela recebida em vendas parceladas (loteamento/incorporação). |
 
 ## 5. Parametrização hierárquica
 

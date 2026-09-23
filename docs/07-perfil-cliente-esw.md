@@ -27,8 +27,11 @@ e o motor de cálculo ([`05`](05-motor-calculo-financeiro.md)).
 > cobrança / gestão de carteira**, não no funil de vendas nem no mapa. Para a ESW,
 > o MVP deve priorizar **Financeiro (cobrança, boletos, carnê, inadimplência,
 > distrato, quitação)**, deixando CRM, mapa e portais para depois. A **migração
-> dos contratos existentes** fica para uma das últimas etapas (Fase 7 —
-> Implantação, no [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases)).
+> dos contratos existentes** é a última etapa da implantação da ESW, ao final do
+> núcleo da carteira (ver a nota do [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases)).
+> A **NF-e ABI (modelo 77)** precisa estar disponível nessa entrada em operação:
+> é obrigatória a partir de **01/12/2026** (regime regular) ou **01/01/2027**
+> (Simples Nacional).
 
 ## 2. Respostas consolidadas por tema
 
@@ -119,8 +122,12 @@ ou corrige a **parcela** na competência?
   nível **Geral** — a cascata não “atrapalha” operações simples (bom sinal de que
   o design não engessa nem complica).
 - **Escopo/priorização ESW:** priorizar **carteira/cobrança**; **mapa, CRM e
-  portais** ficam para fases posteriores; a **migração dos ~215 contratos** é uma
-  das últimas etapas (Fase 7).
+  portais** ficam para fases posteriores; a **migração dos ~215 contratos** é a
+  última etapa da implantação.
+- **Fiscal:** a NF-e ABI entra no núcleo da entrada em operação. Pendentes com a
+  contabilidade da ESW: **regime tributário** (define a data de início),
+  **certificado digital** e o tratamento das parcelas dos **contratos anteriores**
+  à obrigatoriedade.
 
 ## 6. Próximos passos sugeridos
 
@@ -132,5 +139,7 @@ ou corrige a **parcela** na competência?
    ([`08` §6](08-catalogo-de-parametros.md#6-pendências-a-validar-esw)) — em
    especial a base do reajuste (saldo × parcela) e a defasagem do índice.
 5. **Migração da carteira** (~215 contratos com saldos, planos e histórico):
-   **uma das últimas etapas** — Fase 7 (Implantação) do
-   [roadmap](04-backlog-e-roadmap.md#3-roadmap-sugerido-em-fases).
+   **última etapa da implantação**, antes da entrada em operação.
+6. Levantar com a contabilidade da ESW os dados para a **NF-e ABI**: regime
+   tributário, certificado digital, dados fiscais dos lotes (CIB/matrícula da
+   fração) e o tratamento dos contratos anteriores à obrigatoriedade.

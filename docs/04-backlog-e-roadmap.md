@@ -83,6 +83,14 @@ Formato: **Como** \<ator\>, **quero** \<ação\>, **para** \<valor\>.
 - Como **administrador**, quero gerir **perfis e permissões**, **para** controlar
   o acesso. *(RF-ADM-002)*
 
+### Épico I — Fiscal (NF-e ABI)
+- Como **financeiro**, quero que a **NF-e ABI** seja emitida a partir do contrato na
+  efetivação da venda, **para** cumprir a obrigação sem redigitar dados.
+  *(RF-FIS-001, RF-FIS-002)*
+- Como **financeiro**, quero que cada **pagamento de parcela** gere o evento
+  vinculado à nota na baixa, **para** manter a conformidade do IBS/CBS sem
+  trabalho manual. *(RF-FIS-003, RN-081)*
+
 ## 2. Priorização MoSCoW
 
 ### Must (MVP)
@@ -97,14 +105,16 @@ parametrizada da dívida (caso ESW: sem juros mensais + reajuste anual IGP-M +
 1% aditivo; configurável p/ Price/SAC), boletos e baixa (manual + CNAB)**;
 inadimplência básica; distrato; comissão com split (à vista e conforme
 recebimento); usuários/RBAC, multiempresa (SaaS) e auditoria; dashboard comercial e espelho
-exportável.
+exportável; **NF-e ABI (modelo 77)**: emissão na venda, eventos de pagamento e
+cancelamento.
 
 *(RF-EMP-001/002/005/006/008/009/010/011, RF-LOT-001..004/006/008/009/010/012,
 RF-MAP-001..006, RF-CRM-001/003/005/007/010, RF-RES-001..003/007,
 RF-VEN-001..003/005..008, RF-CTR-001/002/005/007, RF-FIN-001..005/007/010/012,
 RF-COM-001..004, RF-GED-001, RF-REL-001..003, RF-ADM-001..005,
 RF-PAR-001..003/005/007/012,
-RF-CALC-001..007/009/010/012/013/015/017, RNF-001..004/007..009/011/012)*
+RF-CALC-001..007/009/010/012/013/015/017, RF-FIS-001..008/010, RF-LOT-015,
+RNF-001..004/007..009/011/012/018)*
 
 ### Should
 Captação automática de leads e distribuição; visitas; assinatura eletrônica;
@@ -141,7 +151,7 @@ fiscal completa; cartório eletrônico; portal público de anúncios próprio.
 | **Fase 0 — Fundação** | Base técnica | Autenticação, RBAC, multiempresa, **parametrização hierárquica** (herança Geral→Empreendimento→Setor→Lote→Contrato), auditoria, GED básico. |
 | **Fase 1 — Estoque e Mapa** | "Ver e cadastrar" | Empreendimentos, lotes, importação geográfica, cálculo de área/perímetro, mapa/espelho de vendas por status. |
 | **Fase 2 — Comercial** | "Vender" | CRM, reservas, propostas com simulação e alçadas nas **três formas de pagamento**, efetivação da venda, contrato por template (para os **dois modelos jurídicos**). |
-| **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** parametrizado (juros nenhum/Price/SAC + reajuste índice + acréscimo fixo; caso ESW: reajuste anual IGP-M + 1% sem juros mensais), mora, antecipação; boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
+| **Fase 3 — Financeiro** | "Receber" | **Motor de cálculo** parametrizado (juros nenhum/Price/SAC + reajuste índice + acréscimo fixo; caso ESW: reajuste anual IGP-M + 1% sem juros mensais), mora, antecipação; **NF-e ABI (modelo 77)**: emissão na venda, eventos de pagamento e cancelamento; boletos/PIX, baixa CNAB, inadimplência, distrato, extrato por contrato, **revisão de parâmetros de contratos vigentes** (individual/em massa, com vigência temporal). |
 | **Fase 4 — Comissões e Repasses** | "Distribuir" | Tabelas e split de comissão, extratos, repasses ao loteador, contas a pagar/receber. |
 | **Fase 5 — Autoatendimento e Cobrança** | "Escalar" | Portal do cliente (boletos/extrato/IR), régua de cobrança, mensageria, assinatura eletrônica. |
 | **Fase 6 — Inteligência** | "Otimizar" | Dashboards avançados/BI, portal do corretor (web), camadas informativas do mapa, conciliação. |
@@ -220,3 +230,10 @@ Exemplos no formato **Dado / Quando / Então** para orientar o refinamento.
 - **Quando** o distrato é aprovado com retenção de 20%,
 - **Então** o sistema calcula o valor a devolver, gera o cronograma de
   devolução, libera o lote (volta a Disponível) e ajusta as comissões.
+
+**NF-e ABI na venda e evento de pagamento (RF-FIS-001/003, RN-080/081)**
+- **Dado** uma venda parcelada efetivada após o início da obrigatoriedade,
+- **Quando** a venda é efetivada,
+- **Então** a NF-e ABI é emitida uma única vez, autorizada e vinculada ao contrato;
+- **E**, a cada parcela baixada, é registrado o evento de pagamento vinculado à
+  nota, com valor original e acréscimos separados — sem emissão de nova nota.
